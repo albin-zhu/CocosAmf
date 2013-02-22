@@ -2,6 +2,9 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "HttpClient.h"
+#include "HttpRequest.h"
+#include "HttpResponse.h"
 
 class HelloWorld : public cocos2d::CCLayer
 {
@@ -17,6 +20,8 @@ public:
 
     // preprocessor macro for "static create()" constructor ( node() deprecated )
     CREATE_FUNC(HelloWorld);
+    
+    void onRecieved(cocos2d::CCObject *sender, cocos2d::extension::CCHttpResponse *data);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

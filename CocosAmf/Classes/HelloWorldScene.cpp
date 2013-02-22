@@ -1,11 +1,17 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "BinaryUtil.h"
+
 
 using namespace cocos2d;
 using namespace CocosDenshion;
+using namespace cocos2d::extension;
 
 CCScene* HelloWorld::scene()
 {
+//    BinaryUtil* t = new BinaryUtil();
+
+    
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
@@ -19,6 +25,12 @@ CCScene* HelloWorld::scene()
     return scene;
 }
 
+void HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)
+{
+    BinaryUtil *amfUtil = new BinaryUtil(*data->getResponseData());
+    amfUtil->decodeAmf();
+}
+
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
@@ -28,6 +40,15 @@ bool HelloWorld::init()
     {
         return false;
     }
+    
+    CCHttpClient *client = CCHttpClient::getInstance();
+    CCHttpRequest *req = new CCHttpRequest();
+    req->setUrl("http://127.0.0.1/gw.php");
+    req->setRequestData("armyId=17024", 12);
+    req->setRequestType(CCHttpRequest::kHttpPost);
+    req->setResponseCallback(this, callfuncND_selector(HelloWorld::onRecieved));
+    client->send(req);
+
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
