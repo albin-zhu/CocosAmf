@@ -17,6 +17,14 @@ AMF3TraitsInfo::AMF3TraitsInfo()
     externalizable = false;
 }
 
+AMF3TraitsInfo::AMF3TraitsInfo(CCString* clazName, bool e, bool d, int count)
+{
+    properties = CCArray::create();
+    dynamic = d;
+    externalizable = e;
+    count = count;
+}
+
 AMF3TraitsInfo::~AMF3TraitsInfo()
 {
     properties->release();

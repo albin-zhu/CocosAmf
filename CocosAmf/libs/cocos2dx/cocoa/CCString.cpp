@@ -121,7 +121,9 @@ const char* CCString::getCString() const
 
 unsigned int CCString::length() const
 {
-    return m_sString.length();
+    if(&m_sString != 0)
+        return m_sString.length();
+    return 0;
 }
 
 int CCString::compare(const char * pStr) const

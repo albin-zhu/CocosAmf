@@ -14,6 +14,8 @@
 #include "cocos2d.h"
 #include "AMFObject.h"
 #include "AMFMessage.h"
+#include "ASObject.h"
+#include "AMF3TraitsInfo.h"
 
 enum AMFVERSION
 {
@@ -46,6 +48,11 @@ public:
     cocos2d::CCObject* readObject(AMF0Type type);
     cocos2d::CCObject* readObject(AMF3Type type);
     
+    cocos2d::CCObject* _decodeAsObject();
+    
+    AMF3TraitsInfo* _decodeTraits(uint32_t);
+    cocos2d::CCObject* _deserializeObject(ASObject*);
+    
     cocos2d::CCArray* readArray();
     u_int8_t* readByteArry();
     
@@ -64,17 +71,22 @@ public:
         m_position += p;
     }
     
+    cocos2d::CCObject* _decodeArray();
+    
     AMF::AMFMessage* decodeAmf0();
     AMF::AMFMessage* decodeAmf3();
     
     cocos2d::CCObject* _decodeAmf0();
+    cocos2d::CCObject* _decodeAmf();
     cocos2d::CCObject* _decodeAmf3();
     cocos2d::CCObject* _findRef(u_int32_t);
+    AMF3TraitsInfo* _traitsReferenceAtIndex(uint32_t);
     
 
 
 private:
     cocos2d::CCArray* m_objectTabel;
+    cocos2d::CCArray* m_stringTable;
     bool ensureLength(int);
     int m_position;
     std::vector<char> m_amf3Stream;

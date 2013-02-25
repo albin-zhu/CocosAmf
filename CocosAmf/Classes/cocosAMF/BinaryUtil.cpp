@@ -16,6 +16,8 @@ BinaryUtil::BinaryUtil(vector<char>& stream)
     this->m_amf3Stream = stream;
     m_position = 0;
     amfVersion = this->readShort() == kAMF0 ? kAMF0 : kAMF3;
+    m_stringTable = CCArray::create();
+    m_objectTabel = CCArray::create();
 }
 
 BinaryUtil::BinaryUtil(std::vector<char> &stream, u_int32_t pos, AMFVERSION ver)
@@ -23,6 +25,8 @@ BinaryUtil::BinaryUtil(std::vector<char> &stream, u_int32_t pos, AMFVERSION ver)
     this->m_amf3Stream = stream;
     m_position = pos;
     amfVersion = ver;
+    m_stringTable = CCArray::create();
+    m_objectTabel = CCArray::create();
 }
 
 BinaryUtil::~BinaryUtil()
@@ -103,7 +107,9 @@ int8_t BinaryUtil::readShort()
 u_int8_t BinaryUtil::readUChar()
 {
     ensureLength(1);
-    return m_amf3Stream[m_position++];
+    u_int8_t c = m_amf3Stream[m_position++];
+    CCLOG("%d",c);
+    return c;
 }
 
 u_int16_t BinaryUtil::readUShort()
@@ -143,7 +149,20 @@ u_int32_t BinaryUtil::readUInt29()
 
 CCString* BinaryUtil::readUTF8()
 {
-    return this->readUTF8WithLen(this->readUShort());
+    if(amfVersion == kAMF0)
+        return this->readUTF8WithLen(this->readUShort());
+    uint32_t ref = this->readUInt29();
+	if ((ref & 1) == 0){
+		ref = (ref >> 1);
+        return (CCString*)m_stringTable->objectAtIndex(ref);
+	}
+	uint32_t length = ref >> 1;
+	if (length == 0){
+		return CCString::create("");
+	}
+	CCString *value = this->readUTF8WithLen(length);
+	m_stringTable->addObject(value);
+	return value;
 }
 
 CCString* BinaryUtil::readUTF8WithLen(u_int32_t len)
@@ -191,9 +210,21 @@ AMF::AMFMessage* BinaryUtil::decodeAmf0()
     
     cout<<int(this->readUInt())<<endl;
     
-    _decodeAmf0();
+    _decodeAmf();
     
     return new AMF::AMFMessage();
+}
+
+CCObject* BinaryUtil::_decodeAmf()
+{
+    if(this->amfVersion == kAMF0)
+    {
+        return _decodeAmf0();
+    }
+    else
+    {
+        return _decodeAmf3();
+    }
 }
 
 CCObject* BinaryUtil::_decodeAmf0()
@@ -207,6 +238,7 @@ CCObject* BinaryUtil::_decodeAmf0()
 
 CCObject* BinaryUtil::_decodeAmf3()
 {
+    this->amfVersion = kAMF3;
     AMF3Type type = (AMF3Type)readUChar();
     
     cout<<"AMF3Type:"<<int(type)<<endl;
@@ -232,6 +264,7 @@ CCObject* BinaryUtil::readObject(AMF0Type type)
             CCLog("类型为0x%x的咱还不会解", type);
             break;
     }
+    this->amfVersion = kAMF0;
     
     
     return dict;
@@ -246,12 +279,13 @@ CCObject* BinaryUtil::readObject(AMF3Type type)
         case kAMF3ObjectType:
         {
             CCLog("0x%d is a object", type);
-            uint32_t ref = this->readUInt29();
-            if ((ref & 1) == 0){
-                ref = (ref >> 1);
-                CCLog("返回一个已经存在的");
-                return m_objectTabel->objectAtIndex(ref);
-            }
+            this->_decodeAsObject();
+        }break;
+            
+        case kAMF3ArrayType:
+        {
+            CCLog("0x%d is a ArrayType", type);
+            this->_decodeArray();
         }break;
         default:
             CCLog("类型为0x%x的咱还不会解", type);
@@ -262,7 +296,175 @@ CCObject* BinaryUtil::readObject(AMF3Type type)
     return dict;
 }
 
-CCObject* BinaryUtil::_findRef(u_int32_t ref)
+CCObject* BinaryUtil::_decodeArray()
 {
+    uint32_t ref = this->readUInt29();
+    if ((ref & 1) == 0)
+    {
+        ref = (ref >> 1);
+        return this->m_objectTabel->objectAtIndex(ref);
+    }
     
+    uint32_t length = (ref >> 1);
+    CCObject* array = NULL;
+    for (;;)
+    {
+        CCString* name = this->readUTF8();
+        if(name == NULL || name->length() == 0)
+        {
+            break;
+        }
+        
+        if(array == NULL)
+        {
+            array = CCDictionary::create();
+            m_objectTabel->addObject(array);
+        }
+        
+        ((CCDictionary*)array)->setObject(this->_decodeAmf3(), name->getCString());
+    }
+    
+    if(array == NULL)
+    {
+        array = CCArray::create();
+        m_objectTabel->addObject(array);
+        for (uint32_t i = 0; i < length; i++)
+        {
+            ((CCArray*)array)->addObject(this->_decodeAmf3());
+        }
+    }
+    else
+    {
+        for (uint32_t i = 0; i < length; i++)
+        {
+            ((CCDictionary*)array)->setObject(this->_decodeAmf3(), i);
+        }
+    }
+    
+    return array;
+}
+
+CCObject* BinaryUtil::_decodeAsObject()
+{
+    uint32_t ref = this->readUInt29();
+    if ((ref & 1) == 0){
+        ref = (ref >> 1);
+        CCLog("返回一个已经存在的");
+        return (ASObject*)m_objectTabel->objectAtIndex(ref);
+    }
+    
+    AMF3TraitsInfo *traitsInfo = this->_decodeTraits(ref);
+    bool isAsobj = false;
+    CCObject* obj;
+    if (traitsInfo->className && traitsInfo->className->length() > 0)
+    {
+        isAsobj = true;
+        obj = new ASObject();
+        obj->autorelease();
+        ((ASObject*)obj)->setType(traitsInfo->className);
+        ((ASObject*)obj)->externalizable = traitsInfo->externalizable;
+    }
+    else
+    {
+        obj = CCDictionary::create();
+    }
+    
+    m_objectTabel->addObject(obj);
+    
+    CCObject *key;
+    uint32_t i = 0;
+    CCARRAY_FOREACH(traitsInfo->properties, key)
+    {
+        CCLog("Key :%s",((CCString*)key)->getCString());
+        if(((CCString*)key)->length() == 0)
+            key = CCString::createWithFormat("%d", i);
+            
+        if(isAsobj)
+        {
+            ((ASObject*)obj)->setObjectForKey((CCString*)key, this->_decodeAmf3());
+        }
+        else
+        {
+            ((CCDictionary*)obj)->setObject(this->_decodeAmf(), ((CCString*)key)->getCString());
+        }
+    }
+    
+    CCString* key1 = (CCString*)key;
+    
+    if(traitsInfo->dynamic)
+    {
+        key = this->readUTF8();
+        while (key != NULL && key1->length() > 0)
+        {
+            if(isAsobj)
+            {
+                ((ASObject*)obj)->setObjectForKey(key1, this->_decodeAmf());
+            }
+            else
+            {
+                ((CCDictionary*)obj)->setObject(this->_decodeAmf(), key1->getCString());
+            }
+        }
+    }
+    
+    if(!isAsobj)
+    {
+        CCDictionary *dictCopy = (CCDictionary*)obj->copy();
+        obj->release();
+        dictCopy->autorelease();
+        return dictCopy;
+    }
+    
+    CCObject *desObject = this->_deserializeObject((ASObject*)obj);
+    if(desObject == obj->copy())
+    {
+        obj->release();
+        desObject->autorelease();
+        return desObject;
+    }
+    
+    obj->release();
+    m_objectTabel->replaceObjectAtIndex(m_objectTabel->indexOfObject(obj), obj);
+
+}
+
+CCObject* BinaryUtil::_deserializeObject(ASObject* asobj)
+{
+    if(!asobj->type)
+    {
+        return asobj;
+    }
+    // 奶奶的不和本地序列化对应了
+    
+    return asobj;
+}
+
+AMF3TraitsInfo* BinaryUtil::_decodeTraits(u_int32_t infoBits)
+{
+    if ((infoBits & 3) == 1)
+    {
+        infoBits = (infoBits >> 2);
+        return this->_traitsReferenceAtIndex(infoBits);
+    }
+    
+    bool externalizable = (infoBits & 4) == 4;
+    bool dynamic = (infoBits & 8) == 8;
+    
+    uint32_t count = infoBits >> 4;
+    CCString *clazName = this->readUTF8();
+    
+    AMF3TraitsInfo *info = new AMF3TraitsInfo(clazName, externalizable, dynamic, count);
+    info->retain();
+    
+    while (count--)
+    {
+        info->addProperty(this->readUTF8());
+    }
+    m_objectTabel->addObject(info);
+    return info;
+}
+
+AMF3TraitsInfo* BinaryUtil::_traitsReferenceAtIndex(uint32_t index)
+{
+    return (AMF3TraitsInfo*)(m_objectTabel->objectAtIndex(index));
 }

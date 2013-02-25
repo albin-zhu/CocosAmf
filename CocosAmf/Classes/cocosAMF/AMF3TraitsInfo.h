@@ -9,12 +9,15 @@
 #ifndef __CocosAmf__AMF3TraitsInfo__
 #define __CocosAmf__AMF3TraitsInfo__
 
-#include "cocos2d.h"
+#include "AMF3.h"
+
+ALBIN_AMF
 
 class AMF3TraitsInfo : public cocos2d::CCObject
 {
 public:
     AMF3TraitsInfo();
+    AMF3TraitsInfo(cocos2d::CCString*, bool, bool, int);
     ~AMF3TraitsInfo();
     
     cocos2d::CCString* className;
@@ -28,5 +31,7 @@ public:
     virtual bool isEqual(const CCObject* pObject);
     cocos2d::CCString* toString();
 };
+
+ALBIN_AMF_END
 
 #endif /* defined(__CocosAmf__AMF3TraitsInfo__) */
