@@ -8,7 +8,8 @@
 
 #include "AMF3TraitsInfo.h"
 
-using namespace cocos2d;
+USING_NS_CC;
+US_ALBIN_AMF;
 
 AMF3TraitsInfo::AMF3TraitsInfo()
 {

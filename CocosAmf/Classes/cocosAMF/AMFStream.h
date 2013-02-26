@@ -26,13 +26,15 @@ public:
     int8_t readShort();
     u_int16_t readUShort();
     u_int8_t readUChar();
+    uint8_t readType(AMF0Type &type);
+    uint8_t readType(AMF3Type &type);
     double readDouble();
     float readFloat();
     bool readBoolean();
     char* readString();
     u_int32_t readUInt29();
     virtual cocos2d::CCString* readUTF();
-    virtual cocos2d::CCString* readUTF(uint32_t len);
+    cocos2d::CCString* readUTF(uint32_t len);
     
     inline uint32_t getBytesAvailable()
     {

@@ -1,11 +1,13 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
-#include "BinaryUtil.h"
+#include "AMF3Decoder.h"
+#include "ALBObject.h"
 
 
 using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace cocos2d::extension;
+using namespace AMF;
 
 CCScene* HelloWorld::scene()
 {
@@ -27,8 +29,26 @@ CCScene* HelloWorld::scene()
 
 void HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)
 {
-    BinaryUtil *amfUtil = new BinaryUtil(*data->getResponseData());
-    amfUtil->decodeAmf();
+    ALBObject o;
+    ALBObject t;
+    t = 18;
+    o.push(t);
+    ALBObject &tt = o.pop();
+    tt = 20;
+//    std::map<string, ALBObject*> map;
+//    ALBObject t;
+//    t = 16;
+//    map["key"] = &t;
+//    ALBObject o;
+//    o = map;
+//    ALBObject tmp;
+//    tmp = 12;
+//    o[string("key2")] = 12;
+//    ALBObject &tt = o[string("key2")];
+//    tt = 20;
+    
+    AMFDecoder *decoder = AMFDecoder::getDecoder(*data->getResponseData());
+    decoder->beginDecode();
 }
 
 // on "init" you need to initialize your instance

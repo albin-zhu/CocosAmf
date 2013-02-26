@@ -7,9 +7,27 @@
 //
 
 #include "AMFDecoder.h"
+#include "AMF3Decoder.h"
+#include "AMF0Decoder.h"
 
 US_ALBIN_AMF;
 USING_NS_CC;
+
+AMFDecoder* AMFDecoder::getDecoder(std::vector<char> stream)
+{
+    u_int8_t ch1, ch2;
+    ch1 = stream[0];
+    ch2 = stream[1];
+    AMFVERSION encoding = (AMFVERSION)((ch1 << 8) + ch2);
+    if(encoding == kAMF0)
+    {
+        return new AMF0Decoder(stream);
+    }
+    else
+    {
+        return new AMF3Decoder(stream);
+    }
+}
 
 AMFDecoder::AMFDecoder(std::vector<char> stream, uint32_t pos, AMFVERSION encoding):AMFStream(stream, pos, encoding)
 {
@@ -22,6 +40,22 @@ AMFDecoder::~AMFDecoder()
 {
     AMFStream::~AMFStream();
     m_objectTable->release();
+}
+
+CCObject* AMFDecoder::decodeObject()
+{
+    return NULL;
+}
+
+CCObject* AMFDecoder::beginDecode()
+{
+    return NULL;
+}
+
+double AMFDecoder::_decodeNumberForKey(cocos2d::CCString* key)
+{
+    CCString* obj = (CCString*)m_currentDeserializedObject->properties->objectForKey(key->getCString());
+    return obj->doubleValue();
 }
 
 bool AMFDecoder::decodeBoolForKey(cocos2d::CCString *key)

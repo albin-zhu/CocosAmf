@@ -17,17 +17,21 @@ class AMF0Decoder : public AMFDecoder
 {
 public:
     AMF0Decoder(std::vector<char> &stream);
+    virtual cocos2d::CCObject *decodeObject();
+    virtual cocos2d::CCObject* beginDecode();
+//    virtual cocos2d::CCString* readUTF();
     
-private:
+protected:
     void *_decode(AMF0Type type);
-    cocos2d::CCArray *_decodeArray();
-    cocos2d::CCObject *_decodeTypedObject();
-    cocos2d::CCObject *_decodeAsOBject(cocos2d::CCString *clazName);
+    virtual cocos2d::CCArray *_decodeArray();
+    virtual cocos2d::CCObject *_decodeTypedObject();
+    virtual cocos2d::CCObject *_decodeAsOBject(cocos2d::CCString *clazName);
     cocos2d::CCString *_decodeLongString();
-    cocos2d::CCObject *_decodeXML();
-    cocos2d::CCString *_decodeDate();
+    virtual cocos2d::CCObject *_decodeXML();
+//    cocos2d::CCString *_decodeDate();
+    virtual cocos2d::cc_timeval _decodeDate();
     cocos2d::CCDictionary *_decodeECMAArray();
-    cocos2d::CCObject *_decodeReference();
+    virtual cocos2d::CCObject *_decodeReference();
 };
 
 ALBIN_AMF_END

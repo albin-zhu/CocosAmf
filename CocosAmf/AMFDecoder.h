@@ -19,6 +19,7 @@ class AMFDecoder : public AMFStream
     
 public:
     AMFDecoder(std::vector<char> stream, uint32_t pos = 0, AMFVERSION encoding = kAMF0);
+    static AMFDecoder* getDecoder(std::vector<char> stream);
     virtual ~AMFDecoder();
     
 public:
@@ -50,9 +51,10 @@ protected:
 public:
     cocos2d::CCString* decodeMultiBytesString(uint32_t len, AMFVERSION encoding);
     virtual cocos2d::CCObject *decodeObject();
+    virtual cocos2d::CCObject* beginDecode();
     
     
-private:
+protected:
     cocos2d::CCArray* m_objectTable;
     ASObject *m_currentDeserializedObject;
     

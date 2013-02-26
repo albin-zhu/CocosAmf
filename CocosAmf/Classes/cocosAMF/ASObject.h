@@ -20,6 +20,7 @@ public:
     
     void addObject(ASObject*);
     void setObjectForKey(cocos2d::CCString* key, CCObject* value);
+    void setObject(CCObject* value, cocos2d::CCString* key);
     void setType(cocos2d::CCString*);
     
 public:

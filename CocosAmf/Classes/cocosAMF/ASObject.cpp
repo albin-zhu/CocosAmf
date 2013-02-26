@@ -8,7 +8,8 @@
 
 #include "ASObject.h"
 
-using namespace cocos2d;
+USING_NS_CC;
+US_ALBIN_AMF;
 
 ASObject::~ASObject()
 {
@@ -30,6 +31,11 @@ void ASObject::setType(cocos2d::CCString *clz)
 }
 
 void ASObject::setObjectForKey(cocos2d::CCString *key, cocos2d::CCObject *value)
+{
+    this->properties->setObject(value, key->getCString());
+}
+
+void ASObject::setObject(cocos2d::CCObject *value, cocos2d::CCString *key)
 {
     this->properties->setObject(value, key->getCString());
 }

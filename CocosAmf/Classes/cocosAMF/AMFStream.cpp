@@ -29,6 +29,18 @@ AMFStream::~AMFStream()
 //    m_stringTable.clear();
 }
 
+bool AMFStream::ensureLength(uint32_t len)
+{
+    if (m_position + len >= this->m_amfStream.capacity())
+    {
+       char* s = new char[30];
+       sprintf(s, "bool AMFStream::ensureLength(uint32_t len) = %d, curPos = %d", len, m_position);
+       throw s;
+    }
+    
+    return true;
+}
+
 
 bool AMFStream::readBoolean()
 {
@@ -97,9 +109,21 @@ int8_t AMFStream::readShort()
 u_int8_t AMFStream::readUChar()
 {
     ensureLength(1);
-    u_int8_t c = m_amfStream[m_position++];
-    CCLOG("%d",c);
-    return c;
+    return m_amfStream[m_position++];;
+}
+
+uint8_t AMFStream::readType(AMF0Type &type)
+{
+    type = (AMF0Type)this->readUChar();
+    printf("AMF::AMFStream::readtype get a AMF0Type 0x%2x\n", type);
+    return type;
+}
+
+uint8_t AMFStream::readType(AMF3Type &type)
+{
+    type = (AMF3Type)this->readUChar();
+    printf("AMF::AMFStream::readtype get a AMF3Type 0x%2x\n", type);
+    return type;
 }
 
 u_int16_t AMFStream::readUShort()
@@ -139,28 +163,16 @@ u_int32_t AMFStream::readUInt29()
 
 cocos2d::CCString* AMFStream::readUTF()
 {
-//    if(m_encoding == kAMF0)
-//        return this->readUTF(this->readUShort());
-//    uint32_t ref = this->readUInt29();
-//	if ((ref & 1) == 0){
-//		ref = (ref >> 1);
-//        m_stringTable[ref];
-//	}
-//	uint32_t length = ref >> 1;
-//	if (length == 0){
-//		return string("");
-//	}
-//	string value = this->readUTF(length);
-//	m_stringTable.push_back(value);
-//	return value;
-    
-    return NULL;
+    return readUTF(readUShort());
 }
 
 cocos2d::CCString* AMFStream::readUTF(u_int32_t len)
 {
+    cocos2d::CCString* res = new cocos2d::CCString("NULL");
     if(len == 0)
-        return NULL;
+    {
+        return res;
+    }
     this->ensureLength(len);
     
     string str;
@@ -169,5 +181,6 @@ cocos2d::CCString* AMFStream::readUTF(u_int32_t len)
         str += m_amfStream[m_position++];
     }
     
-    return cocos2d::CCString::create(str);
+    res = new cocos2d::CCString(str);
+    return res;
 }
