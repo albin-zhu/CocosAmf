@@ -10,7 +10,9 @@
 #define __CocosAmf__AMFDecoder__
 
 #include "AMFStream.h"
-#include "ASObject.h"
+#include "ALBObject.h"
+
+using namespace std;
 
 ALBIN_AMF
 
@@ -34,29 +36,29 @@ public:
     
 protected:
     void _cannotDecodeType(const char* type);
-    cocos2d::CCObject *_objAt(uint32_t index);
-    double _decodeNumberForKey(cocos2d::CCString* key);
+    ALBObject& _objAt(uint32_t index);
+    ALBObject& _decodeNumberForKey(string& key);
     
 protected:
     // DecodeForKey
-    bool decodeBoolForKey(cocos2d::CCString* key);
-    double decodeDoubleForKey(cocos2d::CCString* key);
-    float decodeFloatForKey(cocos2d::CCString* key);
-    int32_t decodeInt32ForKey(cocos2d::CCString* key);
-    int64_t decodeInt64ForKey(cocos2d::CCString* key);
-    int decodeIntForKey(cocos2d::CCString* key);
-    cocos2d::CCObject* decodeObjectForKey(cocos2d::CCString* key);
+    bool decodeBoolForKey(string& key);
+    double decodeDoubleForKey(string& key);
+    float decodeFloatForKey(string& key);
+    int32_t decodeInt32ForKey(string& key);
+    int64_t decodeInt64ForKey(string& key);
+    int decodeIntForKey(string& key);
+    ALBObject& decodeObjectForKey(string& key);
 
 // uncompress
 public:
-    cocos2d::CCString* decodeMultiBytesString(uint32_t len, AMFVERSION encoding);
-    virtual cocos2d::CCObject *decodeObject();
-    virtual cocos2d::CCObject* beginDecode();
+    string& decodeMultiBytesString(uint32_t len, AMFVERSION encoding);
+    virtual ALBObject& decodeObject();
+    virtual ALBObject& beginDecode();
     
     
 protected:
-    cocos2d::CCArray* m_objectTable;
-    ASObject *m_currentDeserializedObject;
+    vector<ALBObject*>* m_objectTable;
+    ALBObject *m_currentDeserializedObject;
     
 };
 

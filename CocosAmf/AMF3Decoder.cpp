@@ -15,45 +15,45 @@ using namespace std;
 
 AMF3Decoder::AMF3Decoder(std::vector<char> stram, uint32_t pos, AMFVERSION encoding):AMFDecoder(stram, pos, kAMF3)
 {
-    m_stringTable = CCArray::create();
-    m_traitsTable = CCArray::create();
+    m_stringTable = new vector<string>();
+    m_traitsTable = new vector<AMF3TraitsInfo*>();
 }
 
 AMF3Decoder::~AMF3Decoder()
 {
     AMFDecoder::~AMFDecoder();
    
-    m_stringTable->release();
-    m_traitsTable->release();
-    
-    CC_SAFE_DELETE(m_traitsTable);
-    CC_SAFE_DELETE(m_stringTable);
+    delete m_stringTable;
+    delete m_stringTable;
 }
 
-CCString* AMF3Decoder::_stringAt(uint32_t index)
+string& AMF3Decoder::_stringAt(uint32_t index)
 {
-    if (m_stringTable->count() <= index)
+    if (m_stringTable->capacity() <= index)
     {
         char* s = new char[30];
-        sprintf(s, "CCString* AMF3Decoder::_stringAt(uint32_t index) index = %d", index);
+        sprintf(s, "string& AMF3Decoder::_stringAt(uint32_t index) index = %d", index);
+        printf("%s",s);
         throw s;
     }
-    return (CCString*)m_stringTable->objectAtIndex(index);
+    return (*m_stringTable)[index];
 }
 
 AMF3TraitsInfo* AMF3Decoder::_traitsAt(uint32_t index)
 {
-    if (m_traitsTable->count() <= index)
+    if (m_traitsTable->capacity() <= index)
     {
         char* s = new char[30];
         sprintf(s, "AMF3TraitsInfo* AMF3Decoder::_traitsAt(uint32_t index) index = %d", index);
+        printf("\n\nERROR: %s\n",s);
         throw s;
     }
-    return (AMF3TraitsInfo*)m_traitsTable->objectAtIndex(index);
+    return (*m_traitsTable)[index];
 }
 
-CCString* AMF3Decoder::readUTF()
+string& AMF3Decoder::readUTF()
 {
+    string *res = new string("");
     uint32_t ref = this->readUInt29();
     if((ref & 1) == 0)
     {
@@ -63,20 +63,20 @@ CCString* AMF3Decoder::readUTF()
     uint32_t length = ref >> 1;
     if (length == 0)
     {
-        return new CCString("NULL");
+        return *res;
     }
     
-    CCString *value = this->readUTF(length);
-    m_stringTable->addObject(value);
-    return value;
+    *res = this->readUTF(length);
+    m_stringTable->push_back(*res);
+    return *res;
 }
 
-CCString* AMF3Decoder::readUTF(uint32_t len)
+string& AMF3Decoder::readUTF(uint32_t len)
 {
     return AMFStream::readUTF(len);
 }
 
-CCObject* AMF3Decoder::beginDecode()
+ALBObject&  AMF3Decoder::beginDecode()
 {
     readShort();
     cout<<"AMFEncoding:"<<m_encoding<<endl;
@@ -85,10 +85,10 @@ CCObject* AMF3Decoder::beginDecode()
     short bodyCount = this->readShort();
     cout<<"Bodys count:"<<bodyCount<<endl;
     
-    CCString* target = this->readUTF();
-    cout<<"Target:"<<target->getCString()<<endl;
-    CCString* resp = this->readUTF();
-    cout<<"Response:"<<resp->getCString()<<endl;
+    string& target = this->readUTF();
+    cout<<"Target:"<<target<<endl;
+    string& resp = this->readUTF();
+    cout<<"Response:"<<resp<<endl;
     
     cout<<int(this->readUInt())<<endl;
     
@@ -96,17 +96,18 @@ CCObject* AMF3Decoder::beginDecode()
 }
 
 
-CCObject* AMF3Decoder::decodeObject()
+ALBObject&  AMF3Decoder::decodeObject()
 {
     AMF3Type type;
     readType(type);
-    return (CCObject*)_decode(type);
+    return (ALBObject& )_decode(type);
 }
 
-void* AMF3Decoder::_decode(AMF3Type type)
+ALBObject& AMF3Decoder::_decode(AMF3Type &type)
 {
-    printf("AMF3Decoder::_decode(AMF3Type type) type = 0x%2x", type);
-    void* value = NULL;
+    printf("AMF3Decoder::_decode(AMF3Type type) type = 0x%02x\n", type);
+    ALBObject *tmp = new ALBObject();
+    ALBObject &value = *tmp;
 	switch (type){
 		case kAMF3StringType:
 			value = this->readUTF();
@@ -122,15 +123,13 @@ void* AMF3Decoder::_decode(AMF3Type type)
 			
 		case kAMF3FalseType:
         {
-            bool f = false;
-			value = &f;
+            value = false;
             break;
         }
 			
 		case kAMF3TrueType:
         {
-            bool f = true;
-			value = &f;
+            value = true;
             break;
         }
 
@@ -138,25 +137,29 @@ void* AMF3Decoder::_decode(AMF3Type type)
 		case kAMF3IntegerType:
         {
 			int32_t intValue = readUInt29();
-			intValue = (intValue << 3) >> 3;
-			value = &intValue;
+			value = (intValue << 3) >> 3;
 			break;
 		}
 			
 		case kAMF3DoubleType:
         {
-            double d = readDouble();
-			value = &d;
+            value = readDouble();
 			break;
         }
 			
 		case kAMF3UndefinedType:
-			return NULL;
+        {
+            ALBObject *a = new ALBObject();
+			return *a;
 			break;
+        }
 			
 		case kAMF3NullType:
-			return NULL;
+        {
+            ALBObject *a = new ALBObject();
+			return *a;
 			break;
+        }
 			
 		case kAMF3XMLType:
 		case kAMF3XMLDocType:
@@ -180,13 +183,13 @@ void* AMF3Decoder::_decode(AMF3Type type)
 }
 
 
-CCObject* AMF3Decoder::_decodeXML()
+ALBObject&  AMF3Decoder::_decodeXML()
 {
     return AMF3Decoder::_decodeXML();
 }
 
 
-CCObject* AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)
+ALBObject&  AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)
 {
     uint32_t ref = this->readUInt29();
     if((ref & 1) == 0)
@@ -196,54 +199,48 @@ CCObject* AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)
     }
     
     AMF3TraitsInfo *info = this->_decodeTraits(ref);
-    bool isAs = false;
-    CCObject *object;
+  
+    ALBObject *tmp = new ALBObject();
+    ALBObject &object = *tmp;
     
-    if(info->className && info-clazName->isEqual(CCString::create("NULL")))
+    if(info->className.length() > 0)
     {
-        isAs = true;
-        object = new ASObject();
-        ((ASObject*)object)->setType(clazName);
-        ((ASObject*)object)->externalizable = info->externalizable;
+        object = new ALBObject();
+        object.type = info->className;
+        object.externalizable = info->externalizable;
     }
-    else
-    {
-        object = CCDictionary::create();
-    }
-    m_objectTable->addObject(object);
     
-    CCObject *key;
-    CCARRAY_FOREACH(info->properties, key)
+    m_objectTable->push_back(tmp);
+    
+    
+    vector<string>::iterator it;
+    for (it = info->properties->begin(); it != info->properties->end(); it++)
     {
-        if(isAs)
+        string key = (string)*it;
+        int k = info->properties->capacity();
+        if(key.length() > 0)
         {
-            ((ASObject*)object)->setObject(this->decodeObject(), (CCString*)key);
+            long len = key.length();
+            printf("%ld", len);
+            object[key] = decodeObject();
         }
-        else
-        {
-            ((CCDictionary*)object)->setObject(this->decodeObject(), (CCString*)key);
-        }
+       
     }
+    
     
     if (info->dynamic)
     {
-        key = this->readUTF();
-        while (key != NULL && ((CCString*)key)->length() > 0)
+        string &key = this->readUTF();
+        while (key.length() > 0)
         {
-            if(isAs)
-            {
-                ((ASObject*)object)->setObject(this->decodeObject(), (CCString*)key);
-            }
-            else
-            {
-                ((CCDictionary*)object)->setObject(this->decodeObject(), (CCString*)key);
-            }
+            object[key] = decodeObject();
+            key = readUTF();
         }
     }
     return object;
 }
 
-CCObject* AMF3Decoder::_decodeArray()
+ALBObject&  AMF3Decoder::_decodeArray()
 {
     uint32_t ref = this->readUInt29();
     if((ref & 1) == 0)
@@ -253,43 +250,43 @@ CCObject* AMF3Decoder::_decodeArray()
     }
     
     uint32_t length = ref >> 1;
-    CCObject* array;
+    ALBObject*  array = NULL;
     
     for(;;)
     {
-        CCString* name = this->readUTF();
-        if(name == NULL || name->length() == 0)
+        string &name = this->readUTF();
+        if(name.length() == 0)
         {
             break;
         }
         
         if(array == NULL)
         {
-            array = CCDictionary::create();
-            m_objectTable->addObject(array);
+            array = new ALBObject();
+            m_objectTable->push_back(array);
         }
         
-        ((CCDictionary*)array)->setObject(this->decodeObject(), name);
+        (*array)[name] = decodeObject();
     }
     
     if(array == NULL)
     {
-        array = CCArray::create();
-        m_objectTable->addObject(array);
+        array = new ALBObject();
+        m_objectTable->push_back(array);
         for (uint32_t i = 0; i < length; i++)
         {
-            ((CCArray*)array)->addObject(this->decodeObject());
+            array->push(decodeObject());
         }
     }
     else
     {
         for (uint32_t i = 0; i < length; i++)
         {
-            ((CCDictionary*)array)->setObject(this->decodeObject(), i);
+            array->push(decodeObject());
         }
     }
     
-    return array;
+    return *array;
 }
 
 AMF3TraitsInfo* AMF3Decoder::_decodeTraits(uint32_t infoBits)
@@ -304,20 +301,19 @@ AMF3TraitsInfo* AMF3Decoder::_decodeTraits(uint32_t infoBits)
     bool dynamic = (infoBits & 8) == 8;
     
     uint32_t count = infoBits >> 4;
-    CCString *clazName = readUTF();
+    string &clazName = readUTF();
     
     AMF3TraitsInfo *info = new AMF3TraitsInfo(clazName, externalizable, dynamic, count);
-    info->retain();
     
     while (count--)
     {
         info->addProperty(this->readUTF());
     }
-    m_objectTable->addObject(info);
+    m_objectTable->push_back(info);
     return info;
 }
 
-CCObject* AMF3Decoder::_decodeDate()
+ALBObject&  AMF3Decoder::_decodeDate()
 {
     uint32_t ref = this->readUInt29();
     if((ref & 1) == 0)
@@ -327,6 +323,7 @@ CCObject* AMF3Decoder::_decodeDate()
     }
     
     double time = this->readDouble();
-    CCString* time_str = CCString::createWithFormat("%f", time);
-    return time_str;
+    ALBObject *t = new ALBObject();
+    *t = time;
+    return *t;
 }

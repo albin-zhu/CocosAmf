@@ -10,26 +10,27 @@
 #define __CocosAmf__AMF3TraitsInfo__
 
 #include "AMF3.h"
+#include "ALBObject.h"
 
 ALBIN_AMF
 
-class AMF3TraitsInfo : public cocos2d::CCObject
+class AMF3TraitsInfo : public ALBObject
 {
 public:
     AMF3TraitsInfo();
-    AMF3TraitsInfo(cocos2d::CCString*, bool, bool, int);
+    AMF3TraitsInfo(std::string&, bool, bool, int);
     ~AMF3TraitsInfo();
     
-    cocos2d::CCString* className;
+    std::string className;
     bool dynamic;
     bool externalizable;
     int count;
-    cocos2d::CCArray *properties;
+    std::vector<std::string> *properties;
     
-    void addProperty(cocos2d::CCString* p);
+    void addProperty(std::string& p);
     
-    virtual bool isEqual(const CCObject* pObject);
-    cocos2d::CCString* toString();
+    virtual bool isEqual(const AMF3TraitsInfo* pObject);
+//    string& toString();
 };
 
 ALBIN_AMF_END

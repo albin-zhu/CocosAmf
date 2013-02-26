@@ -33,8 +33,8 @@ public:
     bool readBoolean();
     char* readString();
     u_int32_t readUInt29();
-    virtual cocos2d::CCString* readUTF();
-    cocos2d::CCString* readUTF(uint32_t len);
+    virtual std::string& readUTF();
+    std::string& readUTF(uint32_t len);
     
     inline uint32_t getBytesAvailable()
     {

@@ -23,27 +23,27 @@ public:
     
 public:
     // AMFStream::
-    virtual cocos2d::CCString* readUTF();
-    virtual cocos2d::CCString* readUTF(uint32_t len);
-    virtual cocos2d::CCObject* decodeObject();
-    virtual cocos2d::CCObject* beginDecode();
+    virtual string& readUTF();
+    virtual string& readUTF(uint32_t len);
+    virtual ALBObject& decodeObject();
+    virtual ALBObject& beginDecode();
     
 protected:
-    cocos2d::CCArray *m_stringTable;
-    cocos2d::CCArray *m_traitsTable;
+    std::vector<string> *m_stringTable;
+    std::vector<AMF3TraitsInfo*> *m_traitsTable;
     
 protected:
-    virtual void *_decode(AMF3Type type);
-    virtual cocos2d::CCObject *_decodeArray();
-    virtual cocos2d::CCObject *_decodeAsObject(cocos2d::CCString *clazName);
-    virtual cocos2d::CCObject *_decodeXML();
-    virtual cocos2d::CCObject* _decodeDate();
-//    virtual cocos2d::CCObject *_decodeReference();
+    virtual ALBObject& _decode(AMF3Type &type);
+    virtual ALBObject& _decodeArray();
+    virtual ALBObject& _decodeAsObject(cocos2d::CCString *clazName);
+    virtual ALBObject& _decodeXML();
+    virtual ALBObject& _decodeDate();
+//    virtual ALBObject& _decodeReference();
     
     AMF3TraitsInfo *_decodeTraits(uint32_t infoBits);
     std::vector<uint8_t>* decodeByteArry();
     
-    cocos2d::CCString* _stringAt(uint32_t index);
+    string& _stringAt(uint32_t index);
     AMF3TraitsInfo* _traitsAt(uint32_t index);
 };
 

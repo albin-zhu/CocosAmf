@@ -35,6 +35,7 @@ bool AMFStream::ensureLength(uint32_t len)
     {
        char* s = new char[30];
        sprintf(s, "bool AMFStream::ensureLength(uint32_t len) = %d, curPos = %d", len, m_position);
+       printf("\n\nERROR: %s\n",s);
        throw s;
     }
     
@@ -115,14 +116,15 @@ u_int8_t AMFStream::readUChar()
 uint8_t AMFStream::readType(AMF0Type &type)
 {
     type = (AMF0Type)this->readUChar();
-    printf("AMF::AMFStream::readtype get a AMF0Type 0x%2x\n", type);
+//    printf("AMF::AMFStream::readtype get a AMF0Type 0x%2x\n", type);
     return type;
 }
 
 uint8_t AMFStream::readType(AMF3Type &type)
 {
-    type = (AMF3Type)this->readUChar();
-    printf("AMF::AMFStream::readtype get a AMF3Type 0x%2x\n", type);
+    uint8_t t = this->readUChar();
+    type = (AMF3Type)t;
+//    printf("AMF::AMFStream::readtype get a AMF3Type 0x%2x\n", type);
     return type;
 }
 
@@ -161,26 +163,24 @@ u_int32_t AMFStream::readUInt29()
 	return value | ch;
 }
 
-cocos2d::CCString* AMFStream::readUTF()
+std::string& AMFStream::readUTF()
 {
     return readUTF(readUShort());
 }
 
-cocos2d::CCString* AMFStream::readUTF(u_int32_t len)
+std::string& AMFStream::readUTF(u_int32_t len)
 {
-    cocos2d::CCString* res = new cocos2d::CCString("NULL");
+    string *str = new string("");
     if(len == 0)
     {
-        return res;
+        return *str;
     }
     this->ensureLength(len);
     
-    string str;
     for (u_int32_t i = 0 ; i < len; i++)
     {
-        str += m_amfStream[m_position++];
+        *str += m_amfStream[m_position++];
     }
     
-    res = new cocos2d::CCString(str);
-    return res;
+    return *str;
 }

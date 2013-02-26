@@ -40,6 +40,11 @@ private:
     vector<ALBObject*> *_array;
     map<string, ALBObject*> *_properties;
     
+public:
+    string type;
+    bool externalizable;
+    uint32_t count;
+    
 // API
 public:
     ALBObject& operator=(const u_int8_t& v);
@@ -77,6 +82,7 @@ public:
         _properties = NULL;
         _array = NULL;
         m_uData._uint8 = 0;
+        type = string("");
     }
 };
 

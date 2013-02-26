@@ -32,77 +32,79 @@ AMFDecoder* AMFDecoder::getDecoder(std::vector<char> stream)
 AMFDecoder::AMFDecoder(std::vector<char> stream, uint32_t pos, AMFVERSION encoding):AMFStream(stream, pos, encoding)
 {
     m_currentDeserializedObject = NULL;
-    m_objectTable = new CCArray();
-    m_objectTable->retain();
+    m_objectTable = new vector<ALBObject*>();
 }
 
 AMFDecoder::~AMFDecoder()
 {
     AMFStream::~AMFStream();
-    m_objectTable->release();
+    m_objectTable = NULL;
+    delete m_objectTable;
 }
 
-CCObject* AMFDecoder::decodeObject()
+ALBObject& AMFDecoder::decodeObject()
 {
-    return NULL;
+    ALBObject* t = NULL;
+    return *t;
 }
 
-CCObject* AMFDecoder::beginDecode()
+ALBObject& AMFDecoder::beginDecode()
 {
-    return NULL;
+    ALBObject* t = NULL;
+    return *t;
 }
 
-double AMFDecoder::_decodeNumberForKey(cocos2d::CCString* key)
+ALBObject& AMFDecoder::_decodeNumberForKey(string& key)
 {
-    CCString* obj = (CCString*)m_currentDeserializedObject->properties->objectForKey(key->getCString());
-    return obj->doubleValue();
+    return *m_currentDeserializedObject;
 }
 
-bool AMFDecoder::decodeBoolForKey(cocos2d::CCString *key)
+bool AMFDecoder::decodeBoolForKey(string &key)
 {
     double num = this->_decodeNumberForKey(key);
     
     return num;
 }
 
-double AMFDecoder::decodeDoubleForKey(cocos2d::CCString *key)
+double AMFDecoder::decodeDoubleForKey(string &key)
 {
     double num = this->_decodeNumberForKey(key);
     return num;
 }
 
-float AMFDecoder::decodeFloatForKey(cocos2d::CCString *key)
+float AMFDecoder::decodeFloatForKey(string &key)
 {
     double num = this->_decodeNumberForKey(key);
     return num;
 }
 
-int32_t AMFDecoder::decodeInt32ForKey(cocos2d::CCString *key)
+int32_t AMFDecoder::decodeInt32ForKey(string &key)
 {
     double num = this->_decodeNumberForKey(key);
     return num;
 }
 
-int64_t AMFDecoder::decodeInt64ForKey(cocos2d::CCString *key)
+int64_t AMFDecoder::decodeInt64ForKey(string &key)
 {
     double num = this->_decodeNumberForKey(key);
     return num;
 }
 
-int AMFDecoder::decodeIntForKey(cocos2d::CCString *key)
+int AMFDecoder::decodeIntForKey(string &key)
 {
     double num = this->_decodeNumberForKey(key);
     return num;
 }
 
-CCObject* AMFDecoder::decodeObjectForKey(cocos2d::CCString *key)
+ALBObject& AMFDecoder::decodeObjectForKey(string &key)
 {
-    return ((ASObject*)m_currentDeserializedObject)->properties->objectForKey(key->getCString());
+    return (*m_currentDeserializedObject)[key];
 }
 
-CCString* AMFDecoder::decodeMultiBytesString(uint32_t len, AMF::AMFVERSION encoding)
+string& AMFDecoder::decodeMultiBytesString(uint32_t len, AMF::AMFVERSION encoding)
 {
-    return NULL;
+    string* tmp = new string("key");
+    return *tmp;
 }
 
 void AMFDecoder::_cannotDecodeType(const char *type)
@@ -110,13 +112,14 @@ void AMFDecoder::_cannotDecodeType(const char *type)
     printf("咱还不会解析类型为%s的数据", type);
 }
 
-CCObject* AMFDecoder::_objAt(uint32_t index)
+ALBObject& AMFDecoder::_objAt(uint32_t index)
 {
-    if (m_objectTable->count() <= index)
+    if (m_objectTable->capacity() <= index)
     {
         char* s = new char[30];
-        sprintf(s, "CCObject* AMFDecoder::_objAt(uint32_t index) index = %d", index);
+        sprintf(s, "ALBObject& AMFDecoder::_objAt(uint32_t index) index = %d", index);
+        printf("\n\nERROR: %s\n",s);
         throw s;
     }
-    return m_objectTable->objectAtIndex(index);
+    return *((*m_objectTable)[index]);
 }

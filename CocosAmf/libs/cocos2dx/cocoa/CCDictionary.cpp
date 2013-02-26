@@ -89,6 +89,11 @@ CCArray* CCDictionary::allKeysForObject(CCObject* object)
     return pArray;
 }
 
+CCObject* CCDictionary::objectForKey(cocos2d::CCString *key)
+{
+    return objectForKey(key->getCString());
+}
+
 CCObject* CCDictionary::objectForKey(const std::string& key)
 {
     if (m_eDictType == kCCDictUnknown && m_eDictType == kCCDictUnknown) return NULL;
@@ -137,6 +142,11 @@ const CCString* CCDictionary::valueForKey(int key)
         pStr = CCString::create("");
     }
     return pStr;
+}
+
+void CCDictionary::setObject(cocos2d::CCObject *pObject, cocos2d::CCString *key)
+{
+    this->setObject(pObject, key->getCString());
 }
 
 void CCDictionary::setObject(CCObject* pObject, const std::string& key)

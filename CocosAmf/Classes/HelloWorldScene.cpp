@@ -63,7 +63,7 @@ bool HelloWorld::init()
     
     CCHttpClient *client = CCHttpClient::getInstance();
     CCHttpRequest *req = new CCHttpRequest();
-    req->setUrl("http://127.0.0.1/gw.php");
+    req->setUrl("http://127.0.0.1/message");
     req->setRequestData("armyId=17024", 12);
     req->setRequestType(CCHttpRequest::kHttpPost);
     req->setResponseCallback(this, callfuncND_selector(HelloWorld::onRecieved));

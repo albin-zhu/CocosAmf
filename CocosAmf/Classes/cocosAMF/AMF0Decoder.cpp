@@ -18,7 +18,7 @@ AMF0Decoder::AMF0Decoder(std::vector<char>& stream):AMFDecoder(stream)
     
 }
 
-CCObject* AMF0Decoder::beginDecode()
+ALBObject& AMF0Decoder::beginDecode()
 {
     readShort();
     cout<<"AMFEncoding:"<<m_encoding<<endl;
@@ -27,37 +27,37 @@ CCObject* AMF0Decoder::beginDecode()
     short bodyCount = this->readShort();
     cout<<"Bodys count:"<<bodyCount<<endl;
     
-    CCString* target = this->readUTF();
-    cout<<"Target:"<<target->getCString()<<endl;
-    CCString* resp = this->readUTF();
-    cout<<"Response:"<<resp->getCString()<<endl;
+    string &target = this->readUTF();
+    cout<<"Target:"<<target<<endl;
+    string &resp = this->readUTF();
+    cout<<"Response:"<<resp<<endl;
     
     cout<<int(this->readUInt())<<endl;
     
     return decodeObject();
 }
 
-CCObject* AMF0Decoder::decodeObject()
+ALBObject& AMF0Decoder::decodeObject()
 {
     AMF0Type type;
     readType(type);
-    return (CCObject*)_decode(type);
+    return _decode(type);
 }
 
-void* AMF0Decoder::_decode(AMF0Type type)
+ALBObject& AMF0Decoder::_decode(AMF0Type& type)
 {
-    void *value = NULL;
+    printf("AMF0Decoder::_decode(AMF0Type type) type = 0x%02x\n", type);
+    ALBObject *tmp = new ALBObject();
+    ALBObject &value = *tmp;
 	switch (type){
 		case kAMF0NumberType:
         {
-            double num = this->readDouble();
-            value = &num;
+            value = this->readDouble();
         }break;
 			
 		case kAMF0BooleanType:
         {
-            bool b = this->readBoolean();
-			value = &b;
+            value = this->readBoolean();
         }break;
 			
 		case kAMF0StringType:
@@ -70,7 +70,7 @@ void* AMF0Decoder::_decode(AMF0Type type)
         
 			value = amf3Decoder->decodeObject();
             m_position = amf3Decoder->getPos();
-			amf3Decoder->~AMF3Decoder();
+//			amf3Decoder->~AMF3Decoder();
 		}break;
 		case kAMF0StrictArrayType:
 			value = this->_decodeArray();
@@ -86,7 +86,8 @@ void* AMF0Decoder::_decode(AMF0Type type)
 			
 		case kAMF0ObjectType:
         {
-			value = this->_decodeAsOBject(NULL);
+            string cls("");
+			value = this->_decodeAsOBject(cls);
         }break;
             
         case kAMF0XMLObjectType:
@@ -99,9 +100,8 @@ void* AMF0Decoder::_decode(AMF0Type type)
 			
 		case kAMF0DateType:
         {
-			cc_timeval date = this->_decodeDate();
-            value = &date;
-			break;
+			value = this->_decodeDate();
+            break;
         }
 			
 		case kAMF0ECMAArrayType:
@@ -135,42 +135,45 @@ void* AMF0Decoder::_decode(AMF0Type type)
 
 }
 
-CCArray* AMF0Decoder::_decodeArray()
+vector<ALBObject*>& AMF0Decoder::_decodeArray()
 {
     uint32_t size = this->readUInt();
-    CCArray *array = CCArray::createWithCapacity(size);
-    m_objectTable->addObject(array);
+    vector<ALBObject*> *array = new vector<ALBObject*>();
+    ALBObject *obj = new ALBObject();
+    *obj = *array;
+    m_objectTable->push_back(obj);
     for (uint32_t i = 0; i < size; i++)
     {
-        CCObject *obj = this->decodeObject();
-        if(obj != NULL)
+        ALBObject &t = this->decodeObject();
+        if(&t != NULL)
         {
-            array->addObject(obj);
+            array->push_back(&t);
         }
     }
     
-    return array;
+    return *array;
 }
 
-CCObject* AMF0Decoder::_decodeTypedObject()
+ALBObject& AMF0Decoder::_decodeTypedObject()
 {
-    CCString *clazName = this->readUTF();
+    string &clazName = this->readUTF();
     return this->_decodeAsOBject(clazName);
 }
 
-CCObject* AMF0Decoder::_decodeAsOBject(cocos2d::CCString *clazName)
+ALBObject& AMF0Decoder::_decodeAsOBject(string &clazName)
 {
-    ASObject *object = new ASObject();
-    object->type = clazName;
-    object->type->retain();
-    m_objectTable->addObject(object);
+    ALBObject *tmp = new ALBObject();
+    ALBObject &object = *tmp;
+    object.type = clazName;
+
+    m_objectTable->push_back(tmp);
     
-    CCString *propertyName = this->readUTF();
+    string &propertyName = this->readUTF();
     AMF0Type type;
     readType(type);
     while (type != kAMF0ObjectEndType)
     {
-        object->setObjectForKey(propertyName, (CCObject*)this->_decode(type));
+        object[propertyName] = this->_decode(type);
         propertyName = this->readUTF();
         this->readType(type);
     }
@@ -178,58 +181,62 @@ CCObject* AMF0Decoder::_decodeAsOBject(cocos2d::CCString *clazName)
     return object;
 }
 
-CCString* AMF0Decoder::_decodeLongString()
+string& AMF0Decoder::_decodeLongString()
 {
+    string *res = new string("");
     uint32_t length = this->readUInt();
     if(length == 0)
     {
-        return NULL;
+        return *res;
     }
     
     return this->readUTF(length);
 }
 
-CCObject* AMF0Decoder::_decodeXML()
+ALBObject& AMF0Decoder::_decodeXML()
 {
-    CCString *xmlString = this->_decodeLongString();
+    ALBObject *xmlString = new ALBObject();
+    *xmlString = this->_decodeLongString();
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS // 呆会再做不同平台的 xml解析。。。算了，还是留给大侠们做吧
-    return xmlString;
+    return *xmlString;
 #else
-    return xmlString;
+    return *xmlString;
 #endif
     
 }
 
 
-cc_timeval AMF0Decoder::_decodeDate()
+ALBObject& AMF0Decoder::_decodeDate()
 {
     double time = this->readDouble();
     // 时区
 //    u_int16_t timeZonge = this->readUShort();
-    cc_timeval t = {time / 1000, time};
-    return t;
+//    cc_timeval t = {time / 1000, time};
+    ALBObject *t = new ALBObject();
+    *t = time;
+    return *t;
 }
 
-CCDictionary* AMF0Decoder::_decodeECMAArray()
+ALBObject& AMF0Decoder::_decodeECMAArray()
 {
     this->readUInt();
-    CCDictionary *dict = CCDictionary::create();
-    m_objectTable->addObject(dict);
+    ALBObject *dict = new ALBObject();
+    m_objectTable->push_back(dict);
     
-    CCString *propertyName = this->readUTF();
+    string &propertyName = this->readUTF();
     AMF0Type type;
     readType(type);
     while (type != kAMF0ObjectEndType)
     {
-        dict->setObject((CCObject*)this->_decode(type), propertyName);
+        (*dict)[propertyName] = this->_decode(type);
         propertyName = this->readUTF();
         readType(type);
     }
     
-    return dict;
+    return *dict;
 }
 
-CCObject* AMF0Decoder::_decodeReference()
+ALBObject& AMF0Decoder::_decodeReference()
 {
     uint16_t index = this->readUShort();
     return _objAt(index);

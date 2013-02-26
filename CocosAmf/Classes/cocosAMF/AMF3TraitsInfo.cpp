@@ -10,17 +10,19 @@
 
 USING_NS_CC;
 US_ALBIN_AMF;
+using namespace std;
 
 AMF3TraitsInfo::AMF3TraitsInfo()
 {
-    properties = CCArray::create();
+    properties = new vector<string>();
     dynamic = false;
     externalizable = false;
 }
 
-AMF3TraitsInfo::AMF3TraitsInfo(CCString* clazName, bool e, bool d, int count)
+AMF3TraitsInfo::AMF3TraitsInfo(string& c, bool e, bool d, int count)
 {
-    properties = CCArray::create();
+    className = c;
+    properties = new vector<string>();
     dynamic = d;
     externalizable = e;
     count = count;
@@ -28,26 +30,44 @@ AMF3TraitsInfo::AMF3TraitsInfo(CCString* clazName, bool e, bool d, int count)
 
 AMF3TraitsInfo::~AMF3TraitsInfo()
 {
-    properties->release();
+    delete properties;
+    properties = NULL;
 }
 
-void AMF3TraitsInfo::addProperty(cocos2d::CCString *p)
+void AMF3TraitsInfo::addProperty(string& p)
 {
-    properties->addObject(p);
+    properties->push_back(p);
 }
 
-bool AMF3TraitsInfo::isEqual(const cocos2d::CCObject *pObject)
+bool AMF3TraitsInfo::isEqual(const AMF3TraitsInfo* pObject)
 {
-    return pObject->m_uID == this->m_uID;
-    
+
     AMF3TraitsInfo *info = (AMF3TraitsInfo*) pObject;
-    bool classNameIdentical = className == NULL
-    ? info->className == NULL
-    : info->className->isEqual(className);
+    bool classNameIdentical = className.empty()
+    ? info->className.empty()
+    : info->className.compare(className);
     
-    bool propertiesIdentical = properties == NULL
-    ? info->properties == NULL
-    : info->properties->isEqual(properties);
+    bool propertiesIdentical = properties->empty() ^ info->properties->empty();
+    
+    if (propertiesIdentical) {
+        if(properties->capacity() > 0 && properties->capacity() == info->properties->capacity())
+        {
+            for(uint32_t i = 0; i < properties->capacity(); i++)
+            {
+                string &p = (*properties)[i];
+                int x = p.compare((*info->properties)[i]);
+                if(x != 0)
+                {
+                    propertiesIdentical = false;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
     
     if(classNameIdentical && propertiesIdentical && info->dynamic == dynamic && externalizable == info->externalizable)
     {
@@ -55,8 +75,8 @@ bool AMF3TraitsInfo::isEqual(const cocos2d::CCObject *pObject)
     }
     return false;
 }
-
-CCString* AMF3TraitsInfo::toString()
+/*
+std::string& AMF3TraitsInfo::toString()
 {
     return CCString::createWithFormat("<%s = 0x%08lx | className: %s | dynamic: %d | externalizable: %d | count: %d", this->m_uID, className, dynamic, externalizable, count);
-}
+}*/

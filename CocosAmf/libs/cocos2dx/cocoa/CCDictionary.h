@@ -124,12 +124,14 @@ public:
     CCArray* allKeysForObject(CCObject* object);
 
     CCObject* objectForKey(const std::string& key);
+    CCObject* objectForKey(CCString *key);
     CCObject* objectForKey(int key);
     const CCString* valueForKey(const std::string& key);
     const CCString* valueForKey(int key);
 
 
     void setObject(CCObject* pObject, const std::string& key);
+    void setObject(CCObject* pObject, CCString* key);
     void setObject(CCObject* pObject, int key);
 
     void removeObjectForKey(const std::string& key);
