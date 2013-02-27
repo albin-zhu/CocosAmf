@@ -10,11 +10,11 @@
 #define __CocosAmf__AMF3TraitsInfo__
 
 #include "AMF3.h"
-#include "ALBObject.h"
+
 
 ALBIN_AMF
 
-class AMF3TraitsInfo : public ALBObject
+class AMF3TraitsInfo
 {
 public:
     AMF3TraitsInfo();
