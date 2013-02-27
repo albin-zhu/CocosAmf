@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B111F45E16D75F5A00E8552B /* AMFMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B111F45C16D75F5A00E8552B /* AMFMessage.cpp */; };
 		B111F46516D777EA00E8552B /* AMF3TraitsInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B111F46316D777EA00E8552B /* AMF3TraitsInfo.cpp */; };
 		B117D15716DC82F400DBBDD9 /* ALBObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B117D15516DC82F400DBBDD9 /* ALBObject.cpp */; };
-		B132E0C916DAF7290089FB39 /* ASObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B132E0C716DAF7290089FB39 /* ASObject.cpp */; };
 		B13A971816D60FAE00E5C67E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13A971716D60FAE00E5C67E /* QuartzCore.framework */; };
 		B13A971A16D60FAE00E5C67E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13A971916D60FAE00E5C67E /* OpenGLES.framework */; };
 		B13A971C16D60FAE00E5C67E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13A971B16D60FAE00E5C67E /* OpenAL.framework */; };
@@ -211,8 +209,6 @@
 		B13A99BE16D60FB200E5C67E /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B13A99BD16D60FB200E5C67E /* HttpClient.cpp */; };
 		B13A99C716D60FB200E5C67E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B13A99C616D60FB200E5C67E /* AppDelegate.cpp */; };
 		B13A99CA16D60FB200E5C67E /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B13A99C916D60FB200E5C67E /* HelloWorldScene.cpp */; };
-		B13A99D316D610B500E5C67E /* AMF3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B13A99D116D610B500E5C67E /* AMF3.cpp */; };
-		B13A99D616D6118700E5C67E /* AMFObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B13A99D416D6118700E5C67E /* AMFObject.cpp */; };
 		B1D6CC4A16DB4C9C0005C6C0 /* AMF0Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D6CC4816DB4C9C0005C6C0 /* AMF0Decoder.cpp */; };
 		B1D6CC4E16DB4CA60005C6C0 /* AMF3Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D6CC4C16DB4CA60005C6C0 /* AMF3Decoder.cpp */; };
 		B1D6CC5116DB4CB50005C6C0 /* AMFDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D6CC4F16DB4CB50005C6C0 /* AMFDecoder.cpp */; };
@@ -220,14 +216,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B111F45C16D75F5A00E8552B /* AMFMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMFMessage.cpp; path = Classes/cocosAMF/AMFMessage.cpp; sourceTree = "<group>"; };
-		B111F45D16D75F5A00E8552B /* AMFMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMFMessage.h; path = Classes/cocosAMF/AMFMessage.h; sourceTree = "<group>"; };
 		B111F46316D777EA00E8552B /* AMF3TraitsInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMF3TraitsInfo.cpp; path = Classes/cocosAMF/AMF3TraitsInfo.cpp; sourceTree = "<group>"; };
 		B111F46416D777EA00E8552B /* AMF3TraitsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMF3TraitsInfo.h; path = Classes/cocosAMF/AMF3TraitsInfo.h; sourceTree = "<group>"; };
 		B117D15516DC82F400DBBDD9 /* ALBObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ALBObject.cpp; path = Classes/cocosAMF/ALBObject.cpp; sourceTree = "<group>"; };
 		B117D15616DC82F400DBBDD9 /* ALBObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALBObject.h; path = Classes/cocosAMF/ALBObject.h; sourceTree = "<group>"; };
-		B132E0C716DAF7290089FB39 /* ASObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ASObject.cpp; path = Classes/cocosAMF/ASObject.cpp; sourceTree = "<group>"; };
-		B132E0C816DAF7290089FB39 /* ASObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASObject.h; path = Classes/cocosAMF/ASObject.h; sourceTree = "<group>"; };
 		B13A971316D60FAE00E5C67E /* CocosAmf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocosAmf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B13A971716D60FAE00E5C67E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B13A971916D60FAE00E5C67E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -668,10 +660,7 @@
 		B13A99C616D60FB200E5C67E /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		B13A99C816D60FB200E5C67E /* HelloWorldScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
 		B13A99C916D60FB200E5C67E /* HelloWorldScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
-		B13A99D116D610B500E5C67E /* AMF3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMF3.cpp; path = Classes/cocosAMF/AMF3.cpp; sourceTree = "<group>"; };
 		B13A99D216D610B500E5C67E /* AMF3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMF3.h; path = Classes/cocosAMF/AMF3.h; sourceTree = "<group>"; };
-		B13A99D416D6118700E5C67E /* AMFObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMFObject.cpp; path = Classes/cocosAMF/AMFObject.cpp; sourceTree = "<group>"; };
-		B13A99D516D6118700E5C67E /* AMFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMFObject.h; path = Classes/cocosAMF/AMFObject.h; sourceTree = "<group>"; };
 		B1D6CC4816DB4C9C0005C6C0 /* AMF0Decoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMF0Decoder.cpp; path = Classes/cocosAMF/AMF0Decoder.cpp; sourceTree = "<group>"; };
 		B1D6CC4916DB4C9C0005C6C0 /* AMF0Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMF0Decoder.h; path = Classes/cocosAMF/AMF0Decoder.h; sourceTree = "<group>"; };
 		B1D6CC4C16DB4CA60005C6C0 /* AMF3Decoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AMF3Decoder.cpp; sourceTree = "<group>"; };
@@ -1592,16 +1581,9 @@
 		B13A99D016D6109400E5C67E /* cocosAMF */ = {
 			isa = PBXGroup;
 			children = (
-				B13A99D116D610B500E5C67E /* AMF3.cpp */,
-				B132E0C716DAF7290089FB39 /* ASObject.cpp */,
-				B132E0C816DAF7290089FB39 /* ASObject.h */,
-				B13A99D416D6118700E5C67E /* AMFObject.cpp */,
-				B13A99D516D6118700E5C67E /* AMFObject.h */,
 				B13A99D216D610B500E5C67E /* AMF3.h */,
 				B111F46316D777EA00E8552B /* AMF3TraitsInfo.cpp */,
 				B111F46416D777EA00E8552B /* AMF3TraitsInfo.h */,
-				B111F45C16D75F5A00E8552B /* AMFMessage.cpp */,
-				B111F45D16D75F5A00E8552B /* AMFMessage.h */,
 				B1D6CC4816DB4C9C0005C6C0 /* AMF0Decoder.cpp */,
 				B1D6CC4916DB4C9C0005C6C0 /* AMF0Decoder.h */,
 				B1D6CC4C16DB4CA60005C6C0 /* AMF3Decoder.cpp */,
@@ -1867,11 +1849,7 @@
 				B13A99BE16D60FB200E5C67E /* HttpClient.cpp in Sources */,
 				B13A99C716D60FB200E5C67E /* AppDelegate.cpp in Sources */,
 				B13A99CA16D60FB200E5C67E /* HelloWorldScene.cpp in Sources */,
-				B13A99D316D610B500E5C67E /* AMF3.cpp in Sources */,
-				B13A99D616D6118700E5C67E /* AMFObject.cpp in Sources */,
-				B111F45E16D75F5A00E8552B /* AMFMessage.cpp in Sources */,
 				B111F46516D777EA00E8552B /* AMF3TraitsInfo.cpp in Sources */,
-				B132E0C916DAF7290089FB39 /* ASObject.cpp in Sources */,
 				B1D6CC4A16DB4C9C0005C6C0 /* AMF0Decoder.cpp in Sources */,
 				B1D6CC4E16DB4CA60005C6C0 /* AMF3Decoder.cpp in Sources */,
 				B1D6CC5116DB4CB50005C6C0 /* AMFDecoder.cpp in Sources */,
