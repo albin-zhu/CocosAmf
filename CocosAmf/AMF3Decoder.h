@@ -23,8 +23,8 @@ public:
     
 public:
     // AMFStream::
-    virtual string& readUTF();
-    virtual string& readUTF(uint32_t len);
+    virtual string readUTF();
+    virtual string readUTF(uint32_t len);
     virtual ALBObject& decodeObject();
     virtual ALBObject& beginDecode();
     
@@ -40,10 +40,10 @@ protected:
     virtual ALBObject& _decodeDate();
 //    virtual ALBObject& _decodeReference();
     
-    AMF3TraitsInfo *_decodeTraits(uint32_t infoBits);
+    AMF3TraitsInfo &_decodeTraits(uint32_t infoBits);
     std::vector<uint8_t>* decodeByteArry();
     
-    string& _stringAt(uint32_t index);
+    string _stringAt(uint32_t index);
     AMF3TraitsInfo* _traitsAt(uint32_t index);
 };
 

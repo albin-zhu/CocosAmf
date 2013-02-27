@@ -31,7 +31,7 @@ AMFStream::~AMFStream()
 
 bool AMFStream::ensureLength(uint32_t len)
 {
-    if (m_position + len >= this->m_amfStream.capacity())
+    if (m_position + len > this->m_amfStream.capacity())
     {
        char* s = new char[30];
        sprintf(s, "bool AMFStream::ensureLength(uint32_t len) = %d, curPos = %d", len, m_position);
@@ -163,12 +163,12 @@ u_int32_t AMFStream::readUInt29()
 	return value | ch;
 }
 
-std::string& AMFStream::readUTF()
+std::string AMFStream::readUTF()
 {
     return readUTF(readUShort());
 }
 
-std::string& AMFStream::readUTF(u_int32_t len)
+std::string AMFStream::readUTF(u_int32_t len)
 {
     string *str = new string("");
     if(len == 0)

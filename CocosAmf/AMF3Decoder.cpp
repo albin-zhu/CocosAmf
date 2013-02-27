@@ -27,7 +27,7 @@ AMF3Decoder::~AMF3Decoder()
     delete m_stringTable;
 }
 
-string& AMF3Decoder::_stringAt(uint32_t index)
+string AMF3Decoder::_stringAt(uint32_t index)
 {
     if (m_stringTable->capacity() <= index)
     {
@@ -51,7 +51,7 @@ AMF3TraitsInfo* AMF3Decoder::_traitsAt(uint32_t index)
     return (*m_traitsTable)[index];
 }
 
-string& AMF3Decoder::readUTF()
+string AMF3Decoder::readUTF()
 {
     string *res = new string("");
     uint32_t ref = this->readUInt29();
@@ -67,11 +67,15 @@ string& AMF3Decoder::readUTF()
     }
     
     *res = this->readUTF(length);
+    if(res->compare("quest_refresh") == 0)
+    {
+        cout<<"stop questRefresh"<<endl;
+    }
     m_stringTable->push_back(*res);
     return *res;
 }
 
-string& AMF3Decoder::readUTF(uint32_t len)
+string AMF3Decoder::readUTF(uint32_t len)
 {
     return AMFStream::readUTF(len);
 }
@@ -85,9 +89,9 @@ ALBObject&  AMF3Decoder::beginDecode()
     short bodyCount = this->readShort();
     cout<<"Bodys count:"<<bodyCount<<endl;
     
-    string& target = this->readUTF();
+    string target = this->readUTF();
     cout<<"Target:"<<target<<endl;
-    string& resp = this->readUTF();
+    string resp = this->readUTF();
     cout<<"Response:"<<resp<<endl;
     
     cout<<int(this->readUInt())<<endl;
@@ -100,18 +104,21 @@ ALBObject&  AMF3Decoder::decodeObject()
 {
     AMF3Type type;
     readType(type);
-    return (ALBObject& )_decode(type);
+    return _decode(type);
 }
 
 ALBObject& AMF3Decoder::_decode(AMF3Type &type)
 {
-    printf("AMF3Decoder::_decode(AMF3Type type) type = 0x%02x\n", type);
+    printf("AMF3Decoder::_decode %s(0x%02x)\n",amf3types[type].c_str(), type);
     ALBObject *tmp = new ALBObject();
     ALBObject &value = *tmp;
 	switch (type){
 		case kAMF3StringType:
-			value = this->readUTF();
+        {
+            string a = readUTF();
+			value = a;
 			break;
+        }
             
 		case kAMF3ObjectType:
 			value = this->_decodeAsObject(NULL);
@@ -198,41 +205,44 @@ ALBObject&  AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)
         return _objAt(ref);
     }
     
-    AMF3TraitsInfo *info = this->_decodeTraits(ref);
+    AMF3TraitsInfo &info = _decodeTraits(ref);
   
     ALBObject *tmp = new ALBObject();
     ALBObject &object = *tmp;
     
-    if(info->className.length() > 0)
+    if(info.className.length() > 0)
     {
+        printf("className = %s \n", info.className.c_str());
         object = new ALBObject();
-        object.type = info->className;
-        object.externalizable = info->externalizable;
+        object.type = info.className;
+        object.externalizable = info.externalizable;
     }
     
     m_objectTable->push_back(tmp);
     
     
     vector<string>::iterator it;
-    for (it = info->properties->begin(); it != info->properties->end(); it++)
+    for (it = info.properties->begin(); it != info.properties->end(); it++)
     {
         string key = (string)*it;
-        int k = info->properties->capacity();
-        if(key.length() > 0)
+        cout<<"key = "<<key<<endl;
+        
+        if (key.compare("DailyTask") == 0)
         {
-            long len = key.length();
-            printf("%ld", len);
-            object[key] = decodeObject();
+            cout<<"stop herer"<<endl;
         }
+        object[key] = decodeObject();
+
        
     }
     
     
-    if (info->dynamic)
+    if (info.dynamic)
     {
-        string &key = this->readUTF();
+        string key = this->readUTF();
         while (key.length() > 0)
         {
+            printf("dynamic key = %s\n", key.c_str());
             object[key] = decodeObject();
             key = readUTF();
         }
@@ -254,7 +264,7 @@ ALBObject&  AMF3Decoder::_decodeArray()
     
     for(;;)
     {
-        string &name = this->readUTF();
+        string name = this->readUTF();
         if(name.length() == 0)
         {
             break;
@@ -289,28 +299,29 @@ ALBObject&  AMF3Decoder::_decodeArray()
     return *array;
 }
 
-AMF3TraitsInfo* AMF3Decoder::_decodeTraits(uint32_t infoBits)
+AMF3TraitsInfo& AMF3Decoder::_decodeTraits(uint32_t infoBits)
 {
     if ((infoBits & 3) == 1)
     {
         infoBits = (infoBits >> 2);
-        return this->_traitsAt(infoBits);
+        return *this->_traitsAt(infoBits);
     }
     
     bool externalizable = (infoBits & 4) == 4;
     bool dynamic = (infoBits & 8) == 8;
     
     uint32_t count = infoBits >> 4;
-    string &clazName = readUTF();
+    string clazName = readUTF();
     
     AMF3TraitsInfo *info = new AMF3TraitsInfo(clazName, externalizable, dynamic, count);
     
     while (count--)
     {
-        info->addProperty(this->readUTF());
+        string a = readUTF();
+        info->addProperty(a);
     }
-    m_objectTable->push_back(info);
-    return info;
+    m_traitsTable->push_back(info);
+    return *info;
 }
 
 ALBObject&  AMF3Decoder::_decodeDate()

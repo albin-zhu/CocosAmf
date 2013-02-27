@@ -27,9 +27,9 @@ ALBObject& AMF0Decoder::beginDecode()
     short bodyCount = this->readShort();
     cout<<"Bodys count:"<<bodyCount<<endl;
     
-    string &target = this->readUTF();
+    string target = this->readUTF();
     cout<<"Target:"<<target<<endl;
-    string &resp = this->readUTF();
+    string resp = this->readUTF();
     cout<<"Response:"<<resp<<endl;
     
     cout<<int(this->readUInt())<<endl;
@@ -61,8 +61,11 @@ ALBObject& AMF0Decoder::_decode(AMF0Type& type)
         }break;
 			
 		case kAMF0StringType:
-			value = this->readUTF();
+        {
+            string a = readUTF();
+			value = a;
 			break;
+        }
 			
 		case kAMF0AVMPlusObjectType:
         {
@@ -81,7 +84,7 @@ ALBObject& AMF0Decoder::_decode(AMF0Type& type)
 			break;
 			
 		case kAMF0LongStringType:
-			value = this->_decodeLongString();
+//			value = this->_decodeLongString();
 			break;
 			
 		case kAMF0ObjectType:
@@ -156,7 +159,7 @@ vector<ALBObject*>& AMF0Decoder::_decodeArray()
 
 ALBObject& AMF0Decoder::_decodeTypedObject()
 {
-    string &clazName = this->readUTF();
+    string clazName = this->readUTF();
     return this->_decodeAsOBject(clazName);
 }
 
@@ -168,7 +171,7 @@ ALBObject& AMF0Decoder::_decodeAsOBject(string &clazName)
 
     m_objectTable->push_back(tmp);
     
-    string &propertyName = this->readUTF();
+    string propertyName = this->readUTF();
     AMF0Type type;
     readType(type);
     while (type != kAMF0ObjectEndType)
@@ -181,7 +184,7 @@ ALBObject& AMF0Decoder::_decodeAsOBject(string &clazName)
     return object;
 }
 
-string& AMF0Decoder::_decodeLongString()
+string AMF0Decoder::_decodeLongString()
 {
     string *res = new string("");
     uint32_t length = this->readUInt();
@@ -195,13 +198,13 @@ string& AMF0Decoder::_decodeLongString()
 
 ALBObject& AMF0Decoder::_decodeXML()
 {
-    ALBObject *xmlString = new ALBObject();
-    *xmlString = this->_decodeLongString();
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS // 呆会再做不同平台的 xml解析。。。算了，还是留给大侠们做吧
-    return *xmlString;
-#else
-    return *xmlString;
-#endif
+//    ALBObject *xmlString = new ALBObject();
+//    xmlString = this->_decodeLongString();
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS // 呆会再做不同平台的 xml解析。。。算了，还是留给大侠们做吧
+//    return *xmlString;
+//#else
+//    return *xmlString;
+//#endif
     
 }
 
@@ -223,7 +226,7 @@ ALBObject& AMF0Decoder::_decodeECMAArray()
     ALBObject *dict = new ALBObject();
     m_objectTable->push_back(dict);
     
-    string &propertyName = this->readUTF();
+    string propertyName = this->readUTF();
     AMF0Type type;
     readType(type);
     while (type != kAMF0ObjectEndType)

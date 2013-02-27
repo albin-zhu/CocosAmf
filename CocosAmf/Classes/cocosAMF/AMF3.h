@@ -60,6 +60,24 @@ typedef enum{
 	kAMF3ByteArrayType = 0xC
 } AMF3Type;
 
+static std::string amf3types[] = {
+    "AMF3UndefinedType",
+    "AMF3NullType",
+    "AMF3FalseType",
+    "AMF3TrueType",
+    "AMF3IntegerType",
+    "kAMF3DoubleType",
+    "kAMF3StringType",
+    "kAMF3ArrayType",
+    "kAMF3DateType",
+    "kAMF3ArrayType",
+    "kAMF3ObjectType",
+    "kAMF3XMLType",
+    "kAMF3ByteArrayType",
+    "UNKNOWN"
+    "UNKNOWN"
+};
+
 ALBIN_AMF_END
 
 

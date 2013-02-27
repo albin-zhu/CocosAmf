@@ -29,26 +29,14 @@ CCScene* HelloWorld::scene()
 
 void HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)
 {
-    ALBObject o;
-    ALBObject t;
-    t = 18;
-    o.push(t);
-    ALBObject &tt = o.pop();
-    tt = 20;
-//    std::map<string, ALBObject*> map;
-//    ALBObject t;
-//    t = 16;
-//    map["key"] = &t;
-//    ALBObject o;
-//    o = map;
-//    ALBObject tmp;
-//    tmp = 12;
-//    o[string("key2")] = 12;
-//    ALBObject &tt = o[string("key2")];
-//    tt = 20;
-    
     AMFDecoder *decoder = AMFDecoder::getDecoder(*data->getResponseData());
-    decoder->beginDecode();
+    ALBObject &obj = decoder->beginDecode();
+
+    string timesatmap = obj[string("data")][0][string("metadata")][string("DailyTask")][0][string("name")];
+    CCLog("Content.data[0].data.timestamp = %s", timesatmap.c_str());
+    CCLog("size of ALBObject = %ld", sizeof(ALBObject));
+    
+    delete &obj;
 }
 
 // on "init" you need to initialize your instance

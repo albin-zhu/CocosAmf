@@ -30,6 +30,8 @@ typedef union
     bool _bool;
     string *_str;
     vector<char> *_byteArray;
+    vector<ALBObject*> *_array;
+    map<string, ALBObject*> *_properties;
     
 }ALBType;
 
@@ -37,8 +39,8 @@ class ALBObject
 {
 private:
     ALBType m_uData;
-    vector<ALBObject*> *_array;
-    map<string, ALBObject*> *_properties;
+    AMF3Type m_dataType;
+    
     
 public:
     string type;
@@ -79,11 +81,11 @@ public:
 public:
     ALBObject()
     {
-        _properties = NULL;
-        _array = NULL;
-        m_uData._uint8 = 0;
         type = string("");
+        m_dataType = kAMF3UndefinedType;
     }
+    
+    ~ALBObject();
 };
 
 ALBIN_AMF_END
