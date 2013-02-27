@@ -2,6 +2,8 @@
 #include "SimpleAudioEngine.h"
 #include "AMF3Decoder.h"
 #include "ALBObject.h"
+#include "AMFActionMessage.h"
+#include "AMFEncoder.h"
 
 
 using namespace cocos2d;
@@ -31,14 +33,23 @@ CCScene* HelloWorld::scene()
 
 void HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)
 {
-    AMFDecoder *decoder = AMFDecoder::getDecoder(*data->getResponseData());
-    ALBObject &obj = decoder->beginDecode();
-
-    string timesatmap = obj[string("data")][0][string("metadata")][string("DailyTask")][0][string("name")];
-    CCLog("Content.data[0].data.timestamp = %s", timesatmap.c_str());
-    CCLog("size of ALBObject = %ld", sizeof(ALBObject));
+//    AMFDecoder *decoder = AMFDecoder::getDecoder(*data->getResponseData());
+//    ALBObject &obj = decoder->beginDecode();
+//
+//    string timesatmap = obj[string("data")][0][string("metadata")][string("DailyTask")][0][string("name")];
+//    CCLog("Content.data[0].data.timestamp = %s", timesatmap.c_str());
+//    CCLog("size of ALBObject = %ld", sizeof(ALBObject));
+//    
+//    delete &obj;
     
-    delete &obj;
+    
+    AMFActionMessage *m = new AMFActionMessage(*data->getResponseData());
+ 
+    AMFMessageBody* body = m->getBodies()[0];
+    string timesatmap = (*body->data)[string("data")][0][string("metadata")][string("DailyTask")][0][string("name")];
+    CCLog("Content.data[0].data.timestamp = %s", timesatmap.c_str());
+    
+
 }
 
 // on "init" you need to initialize your instance

@@ -201,3 +201,25 @@ ALBObject::~ALBObject()
     
     type.clear();
 }
+
+int32_t ALBObject::indexOf(const AMF::ALBObject &data)
+{
+    if(m_dataType != kAMF3ArrayType)
+    {
+        return -1;
+    }
+    else
+    {
+        int i = 0;
+        vector<ALBObject*>::iterator it;
+        for (it = m_uData._array->begin(); it != m_uData._array->end(); it++)
+        {
+            if(*it == &data)
+            {
+                return i;
+            }
+            i++;
+        }
+    }
+    return -1;
+}

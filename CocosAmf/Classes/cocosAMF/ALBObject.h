@@ -41,6 +41,10 @@ private:
     
     
 public:
+    inline AMF3Type getDataType()
+    {
+        return m_dataType;
+    }
     std::string type;
     bool externalizable;
     uint32_t count;
@@ -82,6 +86,9 @@ public:
         type = std::string("");
         m_dataType = kAMF3UndefinedType;
     }
+    
+public:
+    int32_t indexOf(const ALBObject& data);
     
     ~ALBObject();
 };

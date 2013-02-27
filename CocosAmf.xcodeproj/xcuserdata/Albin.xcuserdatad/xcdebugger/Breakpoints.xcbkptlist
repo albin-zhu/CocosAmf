@@ -239,19 +239,6 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
-         timestampString = "383640232.685159"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "37"
-         endingLineNumber = "37"
-         landmarkName = "HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/AMF0Decoder.cpp"
          timestampString = "383636303.907465"
          startingColumnNumber = "9223372036854775807"
@@ -305,11 +292,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
-         timestampString = "383640232.685159"
+         timestampString = "383650922.047267"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
+         startingLineNumber = "46"
+         endingLineNumber = "46"
          landmarkName = "HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -324,6 +311,58 @@
          startingLineNumber = "26"
          endingLineNumber = "26"
          landmarkName = "class AMF3Decoder"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
+         timestampString = "383650922.047267"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "43"
+         endingLineNumber = "43"
+         landmarkName = "HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
+         timestampString = "383645647.619565"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "43"
+         endingLineNumber = "43"
+         landmarkName = "HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "CocosAmf/Classes/cocosAMF/AMFEncoder.cpp"
+         timestampString = "383650922.047267"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "79"
+         endingLineNumber = "79"
+         landmarkName = "AMFEncoder::_apb(uint8_t v, uint32_t p)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "CocosAmf/Classes/cocosAMF/ALBObject.h"
+         timestampString = "383652167.906242"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "70"
+         endingLineNumber = "70"
+         landmarkName = "class ALBObject"
          landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
