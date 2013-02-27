@@ -10,7 +10,7 @@
 #include "AMF3Decoder.h"
 
 US_ALBIN_AMF;
-USING_NS_CC;
+
 using namespace std;
 
 AMF0Decoder::AMF0Decoder(std::vector<char>& stream):AMFDecoder(stream)
@@ -21,18 +21,18 @@ AMF0Decoder::AMF0Decoder(std::vector<char>& stream):AMFDecoder(stream)
 ALBObject& AMF0Decoder::beginDecode()
 {
     readShort();
-    cout<<"AMFEncoding:"<<m_encoding<<endl;
+    printf("AMFEncoding: %d", m_encoding);
     short headCount = this->readShort();
-    cout<<"Heades count:"<<headCount<<endl;
+    printf("Heades count: %d", headCount);
     short bodyCount = this->readShort();
-    cout<<"Bodys count:"<<bodyCount<<endl;
+    printf("Bodys count: %d", bodyCount);
     
     string target = this->readUTF();
-    cout<<"Target:"<<target<<endl;
+    printf("Target: %s", target.c_str());
     string resp = this->readUTF();
-    cout<<"Response:"<<resp<<endl;
+    printf("Response: %s", resp.c_str());
     
-    cout<<int(this->readUInt())<<endl;
+    this->readUInt();
     
     return decodeObject();
 }

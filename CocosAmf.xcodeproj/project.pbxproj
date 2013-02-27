@@ -213,6 +213,7 @@
 		B1D6CC4E16DB4CA60005C6C0 /* AMF3Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D6CC4C16DB4CA60005C6C0 /* AMF3Decoder.cpp */; };
 		B1D6CC5116DB4CB50005C6C0 /* AMFDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D6CC4F16DB4CB50005C6C0 /* AMFDecoder.cpp */; };
 		B1D6CC5416DB4ED50005C6C0 /* AMFStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1D6CC5216DB4ED40005C6C0 /* AMFStream.cpp */; };
+		B1E949F116DDDE57001ECFC7 /* AMFActionMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B1E949EF16DDDE57001ECFC7 /* AMFActionMessage.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -669,6 +670,8 @@
 		B1D6CC5016DB4CB50005C6C0 /* AMFDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFDecoder.h; sourceTree = "<group>"; };
 		B1D6CC5216DB4ED40005C6C0 /* AMFStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMFStream.cpp; path = Classes/cocosAMF/AMFStream.cpp; sourceTree = "<group>"; };
 		B1D6CC5316DB4ED50005C6C0 /* AMFStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMFStream.h; path = Classes/cocosAMF/AMFStream.h; sourceTree = "<group>"; };
+		B1E949EF16DDDE57001ECFC7 /* AMFActionMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AMFActionMessage.cpp; path = Classes/cocosAMF/AMFActionMessage.cpp; sourceTree = "<group>"; };
+		B1E949F016DDDE57001ECFC7 /* AMFActionMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMFActionMessage.h; path = Classes/cocosAMF/AMFActionMessage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1581,9 +1584,19 @@
 		B13A99D016D6109400E5C67E /* cocosAMF */ = {
 			isa = PBXGroup;
 			children = (
+				B1E949EE16DDDE2C001ECFC7 /* message */,
+				B1E949ED16DDDE14001ECFC7 /* dataType */,
+				B1E949EC16DDDDF7001ECFC7 /* decode */,
 				B13A99D216D610B500E5C67E /* AMF3.h */,
 				B111F46316D777EA00E8552B /* AMF3TraitsInfo.cpp */,
 				B111F46416D777EA00E8552B /* AMF3TraitsInfo.h */,
+			);
+			name = cocosAMF;
+			sourceTree = "<group>";
+		};
+		B1E949EC16DDDDF7001ECFC7 /* decode */ = {
+			isa = PBXGroup;
+			children = (
 				B1D6CC4816DB4C9C0005C6C0 /* AMF0Decoder.cpp */,
 				B1D6CC4916DB4C9C0005C6C0 /* AMF0Decoder.h */,
 				B1D6CC4C16DB4CA60005C6C0 /* AMF3Decoder.cpp */,
@@ -1592,10 +1605,26 @@
 				B1D6CC5016DB4CB50005C6C0 /* AMFDecoder.h */,
 				B1D6CC5216DB4ED40005C6C0 /* AMFStream.cpp */,
 				B1D6CC5316DB4ED50005C6C0 /* AMFStream.h */,
+			);
+			name = decode;
+			sourceTree = "<group>";
+		};
+		B1E949ED16DDDE14001ECFC7 /* dataType */ = {
+			isa = PBXGroup;
+			children = (
 				B117D15516DC82F400DBBDD9 /* ALBObject.cpp */,
 				B117D15616DC82F400DBBDD9 /* ALBObject.h */,
 			);
-			name = cocosAMF;
+			name = dataType;
+			sourceTree = "<group>";
+		};
+		B1E949EE16DDDE2C001ECFC7 /* message */ = {
+			isa = PBXGroup;
+			children = (
+				B1E949EF16DDDE57001ECFC7 /* AMFActionMessage.cpp */,
+				B1E949F016DDDE57001ECFC7 /* AMFActionMessage.h */,
+			);
+			name = message;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1855,6 +1884,7 @@
 				B1D6CC5116DB4CB50005C6C0 /* AMFDecoder.cpp in Sources */,
 				B1D6CC5416DB4ED50005C6C0 /* AMFStream.cpp in Sources */,
 				B117D15716DC82F400DBBDD9 /* ALBObject.cpp in Sources */,
+				B1E949F116DDDE57001ECFC7 /* AMFActionMessage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

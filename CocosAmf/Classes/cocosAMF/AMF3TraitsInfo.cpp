@@ -8,7 +8,6 @@
 
 #include "AMF3TraitsInfo.h"
 
-USING_NS_CC;
 US_ALBIN_AMF;
 using namespace std;
 

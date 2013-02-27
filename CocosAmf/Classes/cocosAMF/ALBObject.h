@@ -11,8 +11,6 @@
 
 #include "AMF3.h"
 
-using namespace std;
-
 ALBIN_AMF
 
 class ALBObject;
@@ -28,10 +26,10 @@ typedef union
     float _float;
     double _double;
     bool _bool;
-    string *_str;
-    vector<char> *_byteArray;
-    vector<ALBObject*> *_array;
-    map<string, ALBObject*> *_properties;
+    std::string *_str;
+    std::vector<char> *_byteArray;
+    std::vector<ALBObject*> *_array;
+    std::map<std::string, ALBObject*> *_properties;
     
 }ALBType;
 
@@ -43,7 +41,7 @@ private:
     
     
 public:
-    string type;
+    std::string type;
     bool externalizable;
     uint32_t count;
     
@@ -53,7 +51,7 @@ public:
     ALBObject& operator=(const u_int16_t& v);
     ALBObject& operator=(const u_int32_t& v);
     ALBObject& operator=(const int32_t& v);
-    ALBObject& operator=(string& v);
+    ALBObject& operator=(std::string& v);
     ALBObject& operator=(const float& v);
     ALBObject& operator=(const double& v);
     ALBObject& operator=(const bool& v);
@@ -64,16 +62,16 @@ public:
     operator int32_t();
     operator float();
     operator double();
-    operator string();
+    operator std::string();
     
-    ALBObject& operator=(vector<ALBObject*> &array);
-    ALBObject& operator=(map<string, ALBObject*> &dict);
+    ALBObject& operator=(std::vector<ALBObject*> &array);
+    ALBObject& operator=(std::map<std::string, ALBObject*> &dict);
     
-    operator vector<ALBObject*>();
-    operator map<string, ALBObject*>();
+    operator std::vector<ALBObject*>();
+    operator std::map<std::string, ALBObject*>();
     
     ALBObject& operator [](const uint32_t &index);
-    ALBObject& operator [](const string &key);
+    ALBObject& operator [](const std::string &key);
     
     void push(ALBObject& o);
     ALBObject& pop();
@@ -81,7 +79,7 @@ public:
 public:
     ALBObject()
     {
-        type = string("");
+        type = std::string("");
         m_dataType = kAMF3UndefinedType;
     }
     

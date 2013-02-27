@@ -8,22 +8,22 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629132.404745"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "103"
-         endingLineNumber = "103">
+         startingLineNumber = "99"
+         endingLineNumber = "99">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629132.404745"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "112"
-         endingLineNumber = "112"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
          landmarkName = "AMF3Decoder::_decode(AMF3Type &amp;type)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -32,11 +32,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "262"
-         endingLineNumber = "262"
+         startingLineNumber = "253"
+         endingLineNumber = "253"
          landmarkName = "AMF3Decoder::_decodeArray()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -45,11 +45,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMFDecoder.cpp"
-         timestampString = "383566582.000472"
+         timestampString = "383640232.685159"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "112"
-         endingLineNumber = "112"
+         startingLineNumber = "113"
+         endingLineNumber = "113"
          landmarkName = "AMFDecoder::_cannotDecodeType(const char *type)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -58,12 +58,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "242"
-         endingLineNumber = "242"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
+         startingLineNumber = "233"
+         endingLineNumber = "233"
+         landmarkName = "AMF3Decoder::_decodeAsObject(string *clazName)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -84,12 +84,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "225"
-         endingLineNumber = "225"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
+         startingLineNumber = "221"
+         endingLineNumber = "221"
+         landmarkName = "AMF3Decoder::_decodeAsObject(string *clazName)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -110,11 +110,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMFDecoder.cpp"
-         timestampString = "383568572.736578"
+         timestampString = "383640232.685159"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "111"
-         endingLineNumber = "111"
+         startingLineNumber = "112"
+         endingLineNumber = "112"
          landmarkName = "AMFDecoder::_cannotDecodeType(const char *type)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -123,12 +123,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
+         startingLineNumber = "211"
+         endingLineNumber = "211"
+         landmarkName = "AMF3Decoder::_decodeAsObject(string *clazName)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -136,24 +136,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "215"
-         endingLineNumber = "215"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "288"
-         endingLineNumber = "288"
+         startingLineNumber = "279"
+         endingLineNumber = "279"
          landmarkName = "AMF3Decoder::_decodeArray()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -162,11 +149,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "289"
-         endingLineNumber = "289"
+         startingLineNumber = "280"
+         endingLineNumber = "280"
          landmarkName = "AMF3Decoder::_decodeArray()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -175,11 +162,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "290"
-         endingLineNumber = "290"
+         startingLineNumber = "281"
+         endingLineNumber = "281"
          landmarkName = "AMF3Decoder::_decodeArray()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -188,12 +175,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "245"
-         endingLineNumber = "245"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
+         startingLineNumber = "236"
+         endingLineNumber = "236"
+         landmarkName = "AMF3Decoder::_decodeAsObject(string *clazName)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -201,12 +188,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "246"
-         endingLineNumber = "246"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
+         startingLineNumber = "237"
+         endingLineNumber = "237"
+         landmarkName = "AMF3Decoder::_decodeAsObject(string *clazName)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -214,11 +201,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629132.404745"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "74"
-         endingLineNumber = "74"
+         startingLineNumber = "70"
+         endingLineNumber = "70"
          landmarkName = "AMF3Decoder::readUTF()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -227,25 +214,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629128.613422"
+         timestampString = "383639936.258173"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "72"
-         endingLineNumber = "72"
-         landmarkName = "AMF3Decoder::readUTF()"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383629892.215251"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "247"
-         endingLineNumber = "247"
-         landmarkName = "AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)"
+         startingLineNumber = "238"
+         endingLineNumber = "238"
+         landmarkName = "AMF3Decoder::_decodeAsObject(string *clazName)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -266,11 +240,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
-         timestampString = "383636959.082417"
+         timestampString = "383640232.685159"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
+         startingLineNumber = "37"
+         endingLineNumber = "37"
          landmarkName = "HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -292,20 +266,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/ALBObject.cpp"
-         timestampString = "383637602.478933"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "42"
-         endingLineNumber = "42"
-         landmarkName = "ALBObject::operator=(string &amp;v)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "CocosAmf/Classes/cocosAMF/ALBObject.cpp"
-         timestampString = "383637764.744019"
+         timestampString = "383640087.370989"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "43"
@@ -318,11 +279,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/ALBObject.cpp"
-         timestampString = "383638087.279406"
+         timestampString = "383640087.370989"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "173"
-         endingLineNumber = "173"
+         startingLineNumber = "44"
+         endingLineNumber = "44"
+         landmarkName = "ALBObject::operator=(string &amp;v)"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "CocosAmf/Classes/cocosAMF/ALBObject.cpp"
+         timestampString = "383640087.370989"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
          landmarkName = "ALBObject::~ALBObject()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -331,13 +305,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
-         timestampString = "383638108.079662"
+         timestampString = "383640232.685159"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "39"
-         endingLineNumber = "39"
+         startingLineNumber = "41"
+         endingLineNumber = "41"
          landmarkName = "HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)"
          landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "CocosAmf/AMF3Decoder.h"
+         timestampString = "383640160.486615"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
+         landmarkName = "class AMF3Decoder"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

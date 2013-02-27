@@ -9,6 +9,7 @@
 #include "ALBObject.h"
 
 US_ALBIN_AMF;
+using namespace std;
 
 ALBObject& ALBObject::operator=(const u_int8_t &v)
 {

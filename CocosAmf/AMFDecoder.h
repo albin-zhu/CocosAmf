@@ -12,7 +12,6 @@
 #include "AMFStream.h"
 #include "ALBObject.h"
 
-using namespace std;
 
 ALBIN_AMF
 
@@ -37,27 +36,27 @@ public:
 protected:
     void _cannotDecodeType(const char* type);
     ALBObject& _objAt(uint32_t index);
-    ALBObject& _decodeNumberForKey(string& key);
+    ALBObject& _decodeNumberForKey(std::string& key);
     
 protected:
     // DecodeForKey
-    bool decodeBoolForKey(string& key);
-    double decodeDoubleForKey(string& key);
-    float decodeFloatForKey(string& key);
-    int32_t decodeInt32ForKey(string& key);
-    int64_t decodeInt64ForKey(string& key);
-    int decodeIntForKey(string& key);
-    ALBObject& decodeObjectForKey(string& key);
+    bool decodeBoolForKey(std::string& key);
+    double decodeDoubleForKey(std::string& key);
+    float decodeFloatForKey(std::string& key);
+    int32_t decodeInt32ForKey(std::string& key);
+    int64_t decodeInt64ForKey(std::string& key);
+    int decodeIntForKey(std::string& key);
+    ALBObject& decodeObjectForKey(std::string& key);
 
 // uncompress
 public:
-    string& decodeMultiBytesString(uint32_t len, AMFVERSION encoding);
+    std::string& decodeMultiBytesString(uint32_t len, AMFVERSION encoding);
     virtual ALBObject& decodeObject();
     virtual ALBObject& beginDecode();
     
     
 protected:
-    vector<ALBObject*>* m_objectTable;
+    std::vector<ALBObject*>* m_objectTable;
     ALBObject *m_currentDeserializedObject;
     
 };

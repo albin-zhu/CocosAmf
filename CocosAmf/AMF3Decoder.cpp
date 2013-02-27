@@ -8,7 +8,6 @@
 
 #include "AMF3Decoder.h"
 
-USING_NS_CC;
 US_ALBIN_AMF;
 
 using namespace std;
@@ -67,10 +66,7 @@ string AMF3Decoder::readUTF()
     }
     
     *res = this->readUTF(length);
-    if(res->compare("quest_refresh") == 0)
-    {
-        cout<<"stop questRefresh"<<endl;
-    }
+    
     m_stringTable->push_back(*res);
     return *res;
 }
@@ -83,18 +79,18 @@ string AMF3Decoder::readUTF(uint32_t len)
 ALBObject&  AMF3Decoder::beginDecode()
 {
     readShort();
-    cout<<"AMFEncoding:"<<m_encoding<<endl;
+    printf("AMFEncoding: %d", m_encoding);
     short headCount = this->readShort();
-    cout<<"Heades count:"<<headCount<<endl;
+    printf("Heades count: %d", headCount);
     short bodyCount = this->readShort();
-    cout<<"Bodys count:"<<bodyCount<<endl;
+    printf("Bodys count: %d", bodyCount);
     
     string target = this->readUTF();
-    cout<<"Target:"<<target<<endl;
+    printf("Target: %s", target.c_str());
     string resp = this->readUTF();
-    cout<<"Response:"<<resp<<endl;
+    printf("Response: %s", resp.c_str());
     
-    cout<<int(this->readUInt())<<endl;
+    this->readUInt();
     
     return decodeObject();
 }
@@ -121,7 +117,7 @@ ALBObject& AMF3Decoder::_decode(AMF3Type &type)
         }
             
 		case kAMF3ObjectType:
-			value = this->_decodeAsObject(NULL);
+			value = this->_decodeAsObject();
 			break;
 			
 		case kAMF3ArrayType:
@@ -196,7 +192,7 @@ ALBObject&  AMF3Decoder::_decodeXML()
 }
 
 
-ALBObject&  AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)
+ALBObject&  AMF3Decoder::_decodeAsObject()
 {
     uint32_t ref = this->readUInt29();
     if((ref & 1) == 0)
@@ -225,12 +221,7 @@ ALBObject&  AMF3Decoder::_decodeAsObject(cocos2d::CCString *clazName)
     for (it = info.properties->begin(); it != info.properties->end(); it++)
     {
         string key = (string)*it;
-        cout<<"key = "<<key<<endl;
         
-        if (key.compare("DailyTask") == 0)
-        {
-            cout<<"stop herer"<<endl;
-        }
         object[key] = decodeObject();
 
        

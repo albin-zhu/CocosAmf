@@ -8,6 +8,8 @@ using namespace cocos2d;
 using namespace CocosDenshion;
 using namespace cocos2d::extension;
 using namespace AMF;
+using namespace std;
+
 
 CCScene* HelloWorld::scene()
 {

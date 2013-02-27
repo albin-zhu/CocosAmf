@@ -23,19 +23,19 @@ public:
     
 public:
     // AMFStream::
-    virtual string readUTF();
-    virtual string readUTF(uint32_t len);
+    virtual std::string readUTF();
+    virtual std::string readUTF(uint32_t len);
     virtual ALBObject& decodeObject();
     virtual ALBObject& beginDecode();
     
 protected:
-    std::vector<string> *m_stringTable;
+    std::vector<std::string> *m_stringTable;
     std::vector<AMF3TraitsInfo*> *m_traitsTable;
     
 protected:
     virtual ALBObject& _decode(AMF3Type &type);
     virtual ALBObject& _decodeArray();
-    virtual ALBObject& _decodeAsObject(cocos2d::CCString *clazName);
+    virtual ALBObject& _decodeAsObject();
     virtual ALBObject& _decodeXML();
     virtual ALBObject& _decodeDate();
 //    virtual ALBObject& _decodeReference();
@@ -43,7 +43,7 @@ protected:
     AMF3TraitsInfo &_decodeTraits(uint32_t infoBits);
     std::vector<uint8_t>* decodeByteArry();
     
-    string _stringAt(uint32_t index);
+    std::string _stringAt(uint32_t index);
     AMF3TraitsInfo* _traitsAt(uint32_t index);
 };
 

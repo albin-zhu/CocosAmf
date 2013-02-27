@@ -9,7 +9,10 @@
 #ifndef __CocosAmf__AMF3__
 #define __CocosAmf__AMF3__
 
-#include "cocos2d.h"
+#include <ostream>
+#include <string>
+#include <map>
+#include <vector>
 
 #define ALBIN_AMF namespace AMF{
 #define ALBIN_AMF_END }

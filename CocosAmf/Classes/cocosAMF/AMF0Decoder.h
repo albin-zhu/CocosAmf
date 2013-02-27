@@ -23,10 +23,10 @@ public:
     
 protected:
     ALBObject& _decode(AMF0Type& type);
-    virtual vector<ALBObject*>& _decodeArray();
+    virtual std::vector<ALBObject*>& _decodeArray();
     virtual ALBObject& _decodeTypedObject();
-    virtual ALBObject& _decodeAsOBject(string& clazName);
-    string _decodeLongString();
+    virtual ALBObject& _decodeAsOBject(std::string& clazName);
+    std::string _decodeLongString();
     virtual ALBObject& _decodeXML();
 //    cocos2d::CCString *_decodeDate();
     virtual ALBObject& _decodeDate();

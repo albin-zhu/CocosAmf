@@ -11,7 +11,8 @@
 #include "AMF0Decoder.h"
 
 US_ALBIN_AMF;
-USING_NS_CC;
+
+using namespace std;
 
 AMFDecoder* AMFDecoder::getDecoder(std::vector<char> stream)
 {
@@ -32,7 +33,7 @@ AMFDecoder* AMFDecoder::getDecoder(std::vector<char> stream)
 AMFDecoder::AMFDecoder(std::vector<char> stream, uint32_t pos, AMFVERSION encoding):AMFStream(stream, pos, encoding)
 {
     m_currentDeserializedObject = NULL;
-    m_objectTable = new vector<ALBObject*>();
+    m_objectTable = new std::vector<ALBObject*>();
 }
 
 AMFDecoder::~AMFDecoder()
