@@ -41,13 +41,49 @@ void HelloWorld::onRecieved(CCObject *sender, CCHttpResponse* data)
 //    CCLog("size of ALBObject = %ld", sizeof(ALBObject));
 //    
 //    delete &obj;
+//    string url(data->getHttpRequest()->getUrl());
+//    if(url.compare("http://127.0.0.1/Examples/Php/") != 0)
+//    {
+//        CCHttpClient *client = CCHttpClient::getInstance();
+//        CCHttpRequest *req = new CCHttpRequest();
+//        req->setUrl("http://127.0.0.1/Examples/Php/");
+//        
+//        vector<char> &d = *data->getResponseData();
+//        char *buf = new char(d.size());
+//        
+//        for (uint32_t i = 0; i < d.size() ; i++) {
+//            buf[i] = d[i];
+//            printf("%d",buf[i]);
+//            if(i % 10 == 0)
+//            {
+//                printf("\n");
+//            }
+//        }
+//        
+//        CCLog("%s", buf);
+//        
+//        req->setRequestData(buf, data->getResponseData()->size());
+//        req->setContenType(AMF3_HEADER_CONTENT);
+//        req->setRequestType(CCHttpRequest::kHttpPost);
+//        req->setResponseCallback(this, callfuncND_selector(HelloWorld::onRecieved));
+//        client->send(req);
+//    }
+//    else
+//    {
+    vector<char> d = *data->getResponseData();
+    char *err = new char[d.size()];
+    for (uint32_t i = 0; i < d.size(); i++)
+    {
+        err[i] = d[i];
+    }
+    printf("%s", err);
+
     
-    
-    AMFActionMessage *m = new AMFActionMessage(*data->getResponseData());
+        AMFActionMessage *m = new AMFActionMessage(*data->getResponseData());
  
-    AMFMessageBody* body = m->getBodies()[0];
-    string timesatmap = (*body->data)[string("data")][0][string("metadata")][string("DailyTask")][0][string("name")];
-    CCLog("Content.data[0].data.timestamp = %s", timesatmap.c_str());
+        AMFMessageBody* body = m->getBodies()[0];
+        body->data->toString();
+//    }
     
 
 }
@@ -62,10 +98,45 @@ bool HelloWorld::init()
         return false;
     }
     
+    
+    AMFEncoder *encoder = new AMFEncoder();
+    
+    AMFActionMessage* message = new AMFActionMessage();
+   
+    ALBObject *data = new ALBObject();
+    
+    int x = 33;
+    (*data)[string("age")] = x;
+    (*data)[string("status")] = "nothing yet";
+    (*data)[string("name")] = "Areil";
+   
+    
+    ALBObject* content = new ALBObject();
+    content->push(*data);
+    message->addBody("VoService/receiveAndReturnUserVo2", "/1", *content);
+    const char* buf = encoder->encode(*message);
+    vector<char> res = encoder->getBuf().getBytes();
+    res[1] = 0;
+    AMFActionMessage *m = new AMFActionMessage(res);
+    
+    AMFMessageBody* body = m->getBodies()[0];
+    body->data->toString();
+    
+    uint32_t len = encoder->getSize();
+    
+    for (uint32_t i = 0; i < len; i++) {
+        if(i % 16 == 0)
+            printf("\n");
+        printf("%02x ", buf[i]);
+    }
+  
     CCHttpClient *client = CCHttpClient::getInstance();
     CCHttpRequest *req = new CCHttpRequest();
-    req->setUrl("http://127.0.0.1/message");
-    req->setRequestData("armyId=17024", 12);
+    req->setUrl("http://127.0.0.1/Examples/Php/");
+    
+    
+    req->setRequestData(buf, len);
+    req->setContenType(AMF3_HEADER_CONTENT);
     req->setRequestType(CCHttpRequest::kHttpPost);
     req->setResponseCallback(this, callfuncND_selector(HelloWorld::onRecieved));
     client->send(req);

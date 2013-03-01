@@ -29,6 +29,7 @@ AMF3TraitsInfo::AMF3TraitsInfo(string& c, bool e, bool d, int count)
 
 AMF3TraitsInfo::~AMF3TraitsInfo()
 {
+    properties->clear();
     delete properties;
     properties = NULL;
 }

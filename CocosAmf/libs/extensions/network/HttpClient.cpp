@@ -301,6 +301,14 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
             break;
         }
         
+        curl_slist *headers = NULL;
+        
+        headers = curl_slist_append(headers, request->getContentType());
+        code = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        if (code != CURLE_OK) {
+            break;
+        }
+
         code = curl_easy_setopt(curl, CURLOPT_URL, request->getUrl());
         if (code != CURLE_OK) {
             break;
@@ -329,6 +337,7 @@ int processPostTask(CCHttpRequest *request, write_callback callback, void *strea
         if (code != CURLE_OK) {
             break;
         }
+        curl_slist_free_all(headers);
         
         code = curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, responseCode); 
         if (code != CURLE_OK || *responseCode != 200) {

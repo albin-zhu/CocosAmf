@@ -51,11 +51,23 @@ public:
     
 // API
 public:
+    inline uint32_t getCount()
+    {
+        if (m_dataType == kAMF3ArrayType)
+        {
+            return m_uData._array->size();
+        }
+        return count;
+    }
+    
+    void toString();
+    
+    std::vector<std::string>* allKeys();
     ALBObject& operator=(const u_int8_t& v);
     ALBObject& operator=(const u_int16_t& v);
     ALBObject& operator=(const u_int32_t& v);
     ALBObject& operator=(const int32_t& v);
-    ALBObject& operator=(std::string& v);
+    ALBObject& operator=(const char* v);
     ALBObject& operator=(const float& v);
     ALBObject& operator=(const double& v);
     ALBObject& operator=(const bool& v);
@@ -67,6 +79,7 @@ public:
     operator float();
     operator double();
     operator std::string();
+    operator std::string&();
     
     ALBObject& operator=(std::vector<ALBObject*> &array);
     ALBObject& operator=(std::map<std::string, ALBObject*> &dict);
@@ -85,6 +98,11 @@ public:
     {
         type = std::string("");
         m_dataType = kAMF3UndefinedType;
+    }
+    
+    inline ALBType& getData()
+    {
+        return m_uData;
     }
     
 public:

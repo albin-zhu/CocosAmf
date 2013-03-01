@@ -9,10 +9,14 @@
 #ifndef __CocosAmf__AMF3__
 #define __CocosAmf__AMF3__
 
-#include <ostream>
+#include <iostream>
 #include <string>
 #include <map>
 #include <vector>
+
+
+
+
 
 #define ALBIN_AMF namespace AMF{
 #define ALBIN_AMF_END }
@@ -77,7 +81,7 @@ static std::string amf3types[] = {
     "kAMF3ObjectType",
     "kAMF3XMLType",
     "kAMF3ByteArrayType",
-    "UNKNOWN"
+    "UNKNOWN",
     "UNKNOWN"
 };
 

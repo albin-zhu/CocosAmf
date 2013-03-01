@@ -30,6 +30,8 @@
 
 NS_CC_EXT_BEGIN
 
+#define AMF3_HEADER_CONTENT "Content-type: application/x-amf"
+
 /** 
  @brief defines the object which users must packed for CCHttpClient::send(HttpRequest*) method.
  Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
@@ -58,6 +60,7 @@ public:
         _url.clear();
         _requestData.clear();
         _tag.clear();
+        _contenType.clear();
         _pTarget = NULL;
         _pSelector = NULL;
         _pUserData = NULL;
@@ -175,6 +178,16 @@ public:
     {
         return _pSelector;
     }
+    
+    inline const char* getContentType()
+    {
+        return _contenType.c_str();
+    }
+    
+    inline void setContenType(const char* type)
+    {
+        _contenType = type;
+    }
         
 protected:
     // properties
@@ -184,7 +197,8 @@ protected:
     std::string                 _tag;            /// user defined tag, to identify different requests in response callback
     CCObject*          _pTarget;        /// callback target of pSelector function
     SEL_CallFuncND     _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCObject *sender, void *data)
-    void*                       _pUserData;      /// You can add your customed data here 
+    void*                       _pUserData;      /// You can add your customed data here
+    std::string _contenType;
 };
 
 NS_CC_EXT_END

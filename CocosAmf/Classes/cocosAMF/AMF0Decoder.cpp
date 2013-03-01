@@ -63,7 +63,7 @@ ALBObject& AMF0Decoder::_decode(AMF0Type& type)
 		case kAMF0StringType:
         {
             string a = readUTF();
-			value = a;
+			value = a.c_str();
 			break;
         }
 			

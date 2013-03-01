@@ -15,6 +15,7 @@ ALBObject& ALBObject::operator=(const u_int8_t &v)
 {
     m_uData._uint8 = v;
     m_dataType = kAMF3IntegerType;
+    externalizable = false;
     return *this;
 }
 
@@ -39,7 +40,7 @@ ALBObject& ALBObject::operator=(const int32_t &v)
     return *this;
 }
 
-ALBObject& ALBObject::operator=(string &v)
+ALBObject& ALBObject::operator=(const char* v)
 {
     m_dataType = kAMF3StringType;
     string *value = new string(v);
@@ -117,6 +118,11 @@ ALBObject::operator string()
     return *m_uData._str;
 }
 
+ALBObject::operator string&()
+{
+    return *m_uData._str;
+}
+
 ALBObject::operator vector<ALBObject*>()
 {
     return *m_uData._array;
@@ -131,6 +137,7 @@ ALBObject& ALBObject::operator [](const uint32_t &index)
 {
     if (m_dataType != kAMF3ArrayType || !m_uData._array)
     {
+         externalizable = true;
         m_dataType = kAMF3ArrayType;
         m_uData._array = new vector<ALBObject*>();
     }    return (*(*m_uData._array)[index]);
@@ -156,6 +163,7 @@ void ALBObject::push(ALBObject &o)
 {
     if (m_dataType != kAMF3ArrayType || !m_uData._array)
     {
+        externalizable = true;
         m_dataType = kAMF3ArrayType;
         m_uData._array = new vector<ALBObject*>();
     }
@@ -222,4 +230,82 @@ int32_t ALBObject::indexOf(const AMF::ALBObject &data)
         }
     }
     return -1;
+}
+
+vector<string>* ALBObject::allKeys()
+{
+    if (m_dataType != kAMF3ObjectType || m_uData._properties->size() == 0)
+    {
+        return NULL;
+    }
+    
+    map<string, ALBObject*>::iterator it = m_uData._properties->begin();
+    map<string, ALBObject*>::iterator it_end = m_uData._properties->end();
+    
+    vector<string> *allKeys = new vector<string>();
+    while (it != it_end)
+    {
+        allKeys->push_back(it->first);
+        ++it;
+    }
+    
+    return allKeys;
+}
+
+void ALBObject::toString()
+{
+    switch (m_dataType)
+    {
+        case kAMF3TrueType:
+            printf("True\n");
+            break;
+            
+        case kAMF3FalseType:
+            printf("False\n");
+            break;
+        
+        case kAMF3IntegerType:
+            printf("%d\n", m_uData._uint32);
+            break;
+            
+        case kAMF3DoubleType:
+            printf("%lf\n", m_uData._double);
+            break;
+            
+        case kAMF3StringType:
+            printf("%s\n", m_uData._str->c_str());
+            break;
+            
+        case kAMF3ArrayType:
+        {
+            printf("{\n");
+            uint32_t size = m_uData._array->size();
+            for (uint32_t i = 0; i < size; ++i) {
+                printf("");
+                (*m_uData._array)[i]->toString();
+            }
+            printf("\n}");
+            break;
+        }
+        
+        case kAMF3ObjectType:
+        {
+            map<string, ALBObject*>::iterator it = m_uData._properties->begin();
+            map<string, ALBObject*>::iterator it_end = m_uData._properties->end();
+            
+            printf("Object{\n");
+            while (it != it_end)
+            {
+                printf("%s=>", it->first.c_str());
+                it->second->toString();
+                ++it;
+            }
+            printf("\n}");
+            break;
+        }
+        
+            
+        default:
+            break;
+    }
 }
