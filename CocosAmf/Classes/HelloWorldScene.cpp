@@ -115,20 +115,7 @@ bool HelloWorld::init()
     content->push(*data);
     message->addBody("VoService/receiveAndReturnUserVo2", "/1", *content);
     const char* buf = encoder->encode(*message);
-    vector<char> res = encoder->getBuf().getBytes();
-    res[1] = 0;
-    AMFActionMessage *m = new AMFActionMessage(res);
-    
-    AMFMessageBody* body = m->getBodies()[0];
-    body->data->toString();
-    
     uint32_t len = encoder->getSize();
-    
-    for (uint32_t i = 0; i < len; i++) {
-        if(i % 16 == 0)
-            printf("\n");
-        printf("%02x ", buf[i]);
-    }
   
     CCHttpClient *client = CCHttpClient::getInstance();
     CCHttpRequest *req = new CCHttpRequest();

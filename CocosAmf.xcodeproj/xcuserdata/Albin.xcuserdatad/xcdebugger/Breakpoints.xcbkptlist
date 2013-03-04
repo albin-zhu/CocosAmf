@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/AMFEncoder.cpp"
-         timestampString = "383824797.842736"
+         timestampString = "384053490.411096"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "433"
-         endingLineNumber = "433"
+         startingLineNumber = "435"
+         endingLineNumber = "435"
          landmarkName = "AMFEncoder::encode(AMF::AMFActionMessage &amp;message)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -45,11 +45,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/AMFEncoder.cpp"
-         timestampString = "383824797.842736"
+         timestampString = "384053490.411096"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "316"
-         endingLineNumber = "316"
+         startingLineNumber = "318"
+         endingLineNumber = "318"
          landmarkName = "AMFEncoder::_encodeObject(AMF::ALBObject &amp;source)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -58,25 +58,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/AMFEncoder.cpp"
-         timestampString = "383824797.842736"
+         timestampString = "384053490.411096"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "311"
-         endingLineNumber = "311"
+         startingLineNumber = "313"
+         endingLineNumber = "313"
          landmarkName = "AMFEncoder::_encodeObject(AMF::ALBObject &amp;source)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "CocosAmf/Classes/HelloWorldScene.cpp"
-         timestampString = "383826578.71162"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "120"
-         endingLineNumber = "120"
-         landmarkName = "HelloWorld::init()"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -97,11 +84,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/AMF3Decoder.cpp"
-         timestampString = "383826638.695164"
+         timestampString = "384053490.411096"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "233"
-         endingLineNumber = "233"
+         startingLineNumber = "234"
+         endingLineNumber = "234"
          landmarkName = "AMF3Decoder::_decodeAsObject()"
          landmarkType = "5">
       </FileBreakpoint>

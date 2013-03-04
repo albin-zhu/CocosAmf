@@ -188,7 +188,8 @@ ALBObject& AMF3Decoder::_decode(AMF3Type &type)
 
 ALBObject&  AMF3Decoder::_decodeXML()
 {
-    return AMF3Decoder::_decodeXML();
+    string xml = readUTF();
+    return (ALBObject&)xml;
 }
 
 

@@ -164,14 +164,16 @@ void AMFEncoder::_encode(AMF::ALBObject &source)
             break;
             
         case kAMF3IntegerType:
-            _encodeInteger(source);
+//            _encodeInteger(source);
+            m_bytes.writeByte(kAMF3IntegerType);
+            m_bytes.writeU29(source);
             break;
             
         case kAMF3DoubleType:
             _encodeDouble(source);
             break;
         case kAMF3StringType:
-            _encodeString(source);
+            _encodeString(source, false);
             break;
             
         default:
