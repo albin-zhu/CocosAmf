@@ -133,14 +133,39 @@ ALBObject::operator map<string, ALBObject*>()
     return *m_uData._properties;
 }
 
+ALBObject& ALBObject::operator [](int index)
+{
+    return (*this)[(uint32_t)index];
+}
+
 ALBObject& ALBObject::operator [](const uint32_t &index)
 {
+    ALBObject* tmp = NULL;
+    
     if (m_dataType != kAMF3ArrayType || !m_uData._array)
     {
-         externalizable = true;
+        externalizable = true;
         m_dataType = kAMF3ArrayType;
         m_uData._array = new vector<ALBObject*>();
-    }    return (*(*m_uData._array)[index]);
+    }
+    vector<ALBObject*> &arr = *m_uData._array;
+    
+    if (arr.size() == 0)
+    {
+        tmp = new ALBObject();
+        arr.push_back(tmp);
+    }
+    else
+    {
+        tmp = arr[index];
+    }
+    
+    return *tmp;
+}
+
+ALBObject& ALBObject::operator [](const char* str)
+{
+    return (*this)[string(str)];
 }
 
  ALBObject& ALBObject::operator [](const string &key)

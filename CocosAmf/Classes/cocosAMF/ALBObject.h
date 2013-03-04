@@ -89,6 +89,8 @@ public:
     
     ALBObject& operator [](const uint32_t &index);
     ALBObject& operator [](const std::string &key);
+    ALBObject& operator [](const char* str);
+    ALBObject& operator [](int index);
     
     void push(ALBObject& o);
     ALBObject& pop();
@@ -96,7 +98,7 @@ public:
 public:
     ALBObject()
     {
-        type = std::string("");
+        type.clear();
         m_dataType = kAMF3UndefinedType;
     }
     

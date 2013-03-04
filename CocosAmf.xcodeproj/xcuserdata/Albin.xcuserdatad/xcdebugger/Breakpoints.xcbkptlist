@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "CocosAmf/Classes/cocosAMF/ALBObject.cpp"
-         timestampString = "383822977.549145"
+         timestampString = "384054619.282749"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "255"
-         endingLineNumber = "255">
+         startingLineNumber = "280"
+         endingLineNumber = "280">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"

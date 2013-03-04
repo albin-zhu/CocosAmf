@@ -103,17 +103,16 @@ bool HelloWorld::init()
     
     AMFActionMessage* message = new AMFActionMessage();
    
-    ALBObject *data = new ALBObject();
+    ALBObject data;
     
-    int x = 33;
-    (*data)[string("age")] = x;
-    (*data)[string("status")] = "nothing yet";
-    (*data)[string("name")] = "Areil";
+    data["age"] = 26;
+    data["status"] = "貌似没设";
+    data["name"] = "朱亚斌";
    
     
-    ALBObject* content = new ALBObject();
-    content->push(*data);
-    message->addBody("VoService/receiveAndReturnUserVo2", "/1", *content);
+    ALBObject content;
+    content[0] = data;
+    message->addBody("VoService/receiveAndReturnUserVo2", "/1", content);
     const char* buf = encoder->encode(*message);
     uint32_t len = encoder->getSize();
   
